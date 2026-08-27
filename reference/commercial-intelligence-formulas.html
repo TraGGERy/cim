@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIM Level 6 Commercial Intelligence – Essential Formulas Sheet</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-green: #34d399;
+      --border: #334155;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.8rem;
+      color: var(--text);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .badge {
+      display: inline-block;
+      background: #0284c7;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+      page-break-inside: avoid;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--accent);
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .formula-box {
+      background: #090d16;
+      border-left: 4px solid var(--accent-green);
+      padding: 0.75rem 1rem;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--accent-green);
+      border-radius: 4px;
+      margin: 0.75rem 0;
+    }
+    .details {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    @media print {
+      body {
+        background: white;
+        color: black;
+        padding: 0.5in;
+      }
+      .card {
+        background: white;
+        border: 1px solid #ccc;
+        color: black;
+      }
+      .formula-box {
+        background: #f1f5f9;
+        color: #047857;
+        border-left: 4px solid #047857;
+      }
+      .details {
+        color: #475569;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CIM Level 6 Commercial Intelligence</h1>
+    <span class="badge">Official 2024 V1.1 Formula Reference</span>
+
+    <div class="card">
+      <h3>1. Return on Marketing Investment (ROMI) <span>LO 1.1</span></h3>
+      <div class="formula-box">
+        ROMI (%) = [ ( (Gross Revenue × Gross Margin %) - Marketing Spend ) / Marketing Spend ] × 100
+      </div>
+      <div class="details">
+        <strong>Example:</strong> Revenue £320k, Margin 40%, Spend £80k.<br>
+        Gross Profit = £128k. Net Marketing Profit = £128k - £80k = £48k.<br>
+        ROMI = (£48k / £80k) × 100 = <strong>60.0%</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>2. Customer Acquisition Cost (CAC) <span>LO 1.1 & 2.1</span></h3>
+      <div class="formula-box">
+        CAC (£) = Total Marketing & Sales Costs in Period / Total New Customers Acquired
+      </div>
+      <div class="details">
+        <strong>Benchmarking:</strong> Healthy businesses maintain an LTV : CAC ratio of 3:1 or higher.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>3. Customer Lifetime Value (CLV / LTV) <span>LO 1.1</span></h3>
+      <div class="formula-box">
+        Average Lifespan = 1 / Churn Rate %<br>
+        CLV (£) = (Average Revenue per Period × Gross Margin %) / Churn Rate %
+      </div>
+      <div class="details">
+        <strong>Example:</strong> £50/mo subscription, 80% margin, 4% churn.<br>
+        Lifespan = 1 / 0.04 = 25 months. Monthly Margin = £40.<br>
+        CLV = £40 × 25 = <strong>£1,000</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>4. Break-Even Volume & Revenue <span>LO 1.1</span></h3>
+      <div class="formula-box">
+        Unit Contribution Margin = Selling Price - Variable Cost per Unit<br>
+        Break-Even Units = Fixed Marketing Overheads / Unit Contribution Margin
+      </div>
+      <div class="details">
+        <strong>Example:</strong> Overheads £60,000. Price £120, Variable Cost £70 (Contribution = £50).<br>
+        Break-Even Units = £60,000 / £50 = <strong>1,200 units</strong> (£144,000 revenue).
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>5. Net Promoter Score (NPS) <span>LO 2.1</span></h3>
+      <div class="formula-box">
+        NPS = % Promoters (Scores 9-10) - % Detractors (Scores 0-6)
+      </div>
+      <div class="details">
+        <strong>Note:</strong> Passives (Scores 7-8) are excluded from the net score. NPS ranges between -100 and +100.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>6. Moving Average Seasonal Forecast <span>LO 3.2</span></h3>
+      <div class="formula-box">
+        Seasonally Adjusted Forecast = 4-Quarter Trend Value × Seasonal Index
+      </div>
+      <div class="details">
+        <strong>Example:</strong> Trend estimate £450k, Q4 Seasonal Index 1.25 -> Forecast = <strong>£562,500</strong>.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
