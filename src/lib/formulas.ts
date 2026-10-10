@@ -152,5 +152,113 @@ export const CIM_FORMULAS: FormulaDefinition[] = [
         ]
       };
     }
+  },
+  {
+    id: 'ped',
+    name: 'Price Elasticity of Demand (PED)',
+    category: 'Customer Economics',
+    equation: 'PED = (% Change in Quantity Demanded) / (% Change in Price)',
+    variables: [
+      { name: '% Change in Quantity Demanded', symbol: 'dQ', unit: '%', description: 'Percentage change in units purchased' },
+      { name: '% Change in Price', symbol: 'dP', unit: '%', description: 'Percentage change in selling price' }
+    ],
+    explanation: 'Measures consumer price sensitivity. |PED| > 1 is Price Elastic (price rises reduce total revenue); |PED| < 1 is Price Inelastic (price rises increase total revenue).',
+    cimLearningOutcome: 'LO 1.1 (Pricing metrics & Price Elasticity of Demand)',
+    calculate: (inputs) => {
+      const dQ = inputs['dQ'] || 0;
+      const dP = inputs['dP'] || 1;
+      const ped = dQ / dP;
+      const elasticity = Math.abs(ped) > 1 ? 'Price Elastic' : Math.abs(ped) < 1 ? 'Price Inelastic' : 'Unit Elastic';
+      return {
+        result: Math.round(ped * 100) / 100,
+        unit: elasticity,
+        steps: [
+          `% Change in Demand = ${dQ}%`,
+          `% Change in Price = ${dP}%`,
+          `PED = ${dQ}% / ${dP}% = ${ped.toFixed(2)} (${elasticity})`
+        ]
+      };
+    }
+  },
+  {
+    id: 'crr',
+    name: 'Customer Retention Rate (CRR)',
+    category: 'Customer Economics',
+    equation: 'CRR = [ (Customers at End - New Customers Acquired) / Customers at Start ] × 100%',
+    variables: [
+      { name: 'Customers at Period End', symbol: 'E', unit: 'Count', description: 'Total customer count at end of period' },
+      { name: 'New Customers Acquired', symbol: 'N', unit: 'Count', description: 'New customers added during period' },
+      { name: 'Customers at Period Start', symbol: 'S', unit: 'Count', description: 'Total customer count at beginning of period' }
+    ],
+    explanation: 'Measures the percentage of existing customers an organization successfully retains over a defined operating interval.',
+    cimLearningOutcome: 'LO 1.1 (Customer retention rate, attrition & churn)',
+    calculate: (inputs) => {
+      const E = inputs['E'] || 0;
+      const N = inputs['N'] || 0;
+      const S = inputs['S'] || 1;
+      const retained = E - N;
+      const crr = (retained / S) * 100;
+      return {
+        result: Math.round(crr * 100) / 100,
+        unit: '%',
+        steps: [
+          `Retained Original Customers = End Count (${E.toLocaleString()}) - New Acquired (${N.toLocaleString()}) = ${retained.toLocaleString()}`,
+          `Customer Retention Rate = (${retained.toLocaleString()} / ${S.toLocaleString()}) × 100% = ${crr.toFixed(2)}%`,
+          `Implied Churn Rate = ${(100 - crr).toFixed(2)}%`
+        ]
+      };
+    }
+  },
+  {
+    id: 'mos',
+    name: 'Margin of Safety (MoS)',
+    category: 'Financial',
+    equation: 'Margin of Safety % = [ (Current Actual Sales - Break-Even Sales) / Current Actual Sales ] × 100%',
+    variables: [
+      { name: 'Current / Forecast Sales', symbol: 'Sales', unit: '£', description: 'Current or budgeted revenue volume' },
+      { name: 'Break-Even Sales', symbol: 'BE', unit: '£', description: 'Revenue required to break even' }
+    ],
+    explanation: 'Measures the financial cushion before marketing revenue falls below the break-even threshold and the campaign operates at a net loss.',
+    cimLearningOutcome: 'LO 1.1 (Financial metrics: Margin of safety, break-even)',
+    calculate: (inputs) => {
+      const Sales = inputs['Sales'] || 0;
+      const BE = inputs['BE'] || 0;
+      const cushion = Sales - BE;
+      const mos = Sales > 0 ? (cushion / Sales) * 100 : 0;
+      return {
+        result: Math.round(mos * 100) / 100,
+        unit: '%',
+        steps: [
+          `Buffer Revenue = Current Sales (£${Sales.toLocaleString()}) - Break-Even (£${BE.toLocaleString()}) = £${cushion.toLocaleString()}`,
+          `Margin of Safety = (£${cushion.toLocaleString()} / £${Sales.toLocaleString()}) × 100% = ${mos.toFixed(2)}%`
+        ]
+      };
+    }
+  },
+  {
+    id: 'payback',
+    name: 'Marketing Investment Payback Period',
+    category: 'Financial',
+    equation: 'Payback Period = Initial Capital Outlay / Annual Net Incremental Cash Flow',
+    variables: [
+      { name: 'Initial Capital Investment', symbol: 'I', unit: '£', description: 'Upfront marketing/MarTech capital expenditure' },
+      { name: 'Annual Net Cash Inflow', symbol: 'CF', unit: '£/yr', description: 'Net annual incremental cash flow generated' }
+    ],
+    explanation: 'Calculates the exact duration in years required to fully recoup initial capital expenditure on marketing infrastructure or technology.',
+    cimLearningOutcome: 'LO 1.1 & LO 3.1 (Capital budgeting & Payback Period)',
+    calculate: (inputs) => {
+      const I = inputs['I'] || 0;
+      const CF = inputs['CF'] || 1;
+      const years = I / CF;
+      return {
+        result: Math.round(years * 10) / 10,
+        unit: 'Years',
+        steps: [
+          `Initial Marketing Outlay = £${I.toLocaleString()}`,
+          `Annual Net Inflow = £${CF.toLocaleString()}/year`,
+          `Payback Period = £${I.toLocaleString()} / £${CF.toLocaleString()} = ${years.toFixed(2)} years (${Math.round(years * 12)} months)`
+        ]
+      };
+    }
   }
 ];

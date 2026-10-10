@@ -608,5 +608,455 @@ export const STRATEGY_PLANNING_MCQ_QUESTIONS: ExamQuestion[] = [
       },
       syllabusReference: 'CIM Strategy and Planning Specification LO 3.1 (Porter’s Generic Strategies)'
     }
+  },
+  {
+    id: 119,
+    loId: 'LO1',
+    criterionId: '1.2',
+    commandVerb: 'Analyse',
+    difficulty: 'advanced',
+    scenario: 'A traditional B2B equipment distributor transitions from a linear value chain (pipeline business model) to a digital two-sided marketplace platform connecting independent equipment operators with construction project managers.',
+    question: 'Which economic dynamic represents the primary source of enterprise value creation in this two-sided platform model?',
+    options: [
+      { id: 'A', text: 'Indirect network effects, where an increasing supply of verified equipment operators attracts more project managers, which in turn attracts more operators.' },
+      { id: 'B', text: 'Linear inventory markups on depreciating heavy machinery stored in physical warehouses.' },
+      { id: 'C', text: 'Elimination of all digital transaction logging to speed up manual paperwork.' },
+      { id: 'D', text: 'Relying exclusively on printed yellow pages directories for vendor discovery.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Platform business models create value by facilitating exchanges between two interdependent user groups. Cross-side (indirect) network effects create self-reinforcing liquidity and switching barriers that linear pipeline models cannot replicate.',
+      distractorAnalysis: {
+        'B': 'Describes traditional linear pipeline inventory models.',
+        'C': 'Platforms rely fundamentally on digital data logs, matching algorithms, and automated trust architectures.',
+        'D': 'Paper directories are obsolete legacy mechanisms.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 1.2 (Business Models: Platform vs Pipeline & Value Ecosystems)'
+    }
+  },
+  {
+    id: 120,
+    loId: 'LO1',
+    criterionId: '1.1',
+    commandVerb: 'Appraise',
+    difficulty: 'intermediate',
+    scenario: 'A jet engine manufacturer stops selling engines as one-off capital hardware units and instead offers an operational contract: "Power by the Hour," charging airlines per engine operating hour flown, inclusive of all predictive maintenance and sensor telematics.',
+    question: 'Identify the strategic marketing concept illustrated by this business model shift.',
+    options: [
+      { id: 'A', text: 'Servitization and Product-Service Systems (PSS)' },
+      { id: 'B', text: 'Unrelated Conglomerate Diversification' },
+      { id: 'C', text: 'Loss-Leader Retailing' },
+      { id: 'D', text: 'Predatory Dumping' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Servitization involves transitioning from selling standalone physical products to delivering integrated solutions and performance outcomes (Product-Service Systems), transforming volatile one-off revenues into high-margin recurring relationships.',
+      distractorAnalysis: {
+        'B': 'The firm is still delivering aero-engine propulsion; it is not entering an unrelated industry.',
+        'C': 'Loss-leader pricing involves selling a product below cost to stimulate footfall, which does not apply to aviation contracts.',
+        'D': 'Predatory dumping involves selling goods abroad below fair value to destroy competitors.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 1.1 (Strategic concepts: Servitization, Value Proposition & Outcome Selling)'
+    }
+  },
+  {
+    id: 121,
+    loId: 'LO2',
+    criterionId: '2.1',
+    commandVerb: 'Critically Evaluate',
+    difficulty: 'advanced',
+    scenario: 'An organisation evaluates whether its proprietary proprietary algorithm and AI model provide a Sustainable Competitive Advantage using Barney’s VRIO framework.',
+    question: 'Under the VRIO framework, what condition must be met for a resource to confer a Sustained (Long-Term) Competitive Advantage?',
+    options: [
+      { id: 'A', text: 'The resource must be Valuable, Rare, Inimitable (difficult/costly to substitute or copy), and the Organisation must be structured to exploit it.' },
+      { id: 'B', text: 'The resource must be purchased at a discount from an external commercial agency.' },
+      { id: 'C', text: 'The resource must be shared openly with all direct market rivals.' },
+      { id: 'D', text: 'The resource must be temporary and depreciated to zero within 30 days.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Under the Resource-Based View (RBV) and Barney’s VRIO framework, resources that are merely Valuable provide competitive parity; Rare adds temporary advantage; but only Inimitable resources embedded in an Organised firm deliver sustained competitive advantage.',
+      distractorAnalysis: {
+        'B': 'Easily purchased market assets cannot provide sustainable advantage because competitors can buy them too.',
+        'C': 'Sharing with rivals eliminates rarity and distinctiveness.',
+        'D': 'Short-lived resources cannot support long-term advantage.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.1 (Resource-Based View RBV & VRIO Framework)'
+    }
+  },
+  {
+    id: 122,
+    loId: 'LO2',
+    criterionId: '2.3',
+    commandVerb: 'Recommend',
+    difficulty: 'intermediate',
+    scenario: 'In Mendelow’s Power/Interest Matrix, municipal regulatory bodies responsible for issuing urban operating licenses possess High Power but currently display Low Interest in a ride-hailing company’s internal branding campaign.',
+    question: 'What is the recommended stakeholder management strategy for this quadrant according to Mendelow?',
+    options: [
+      { id: 'A', text: 'Keep Satisfied (anticipate legal requirements and avoid provocative actions that could increase their active interest).' },
+      { id: 'B', text: 'Manage Closely (bombard with daily promotional emails).' },
+      { id: 'C', text: 'Monitor / Minimal Effort (ignore completely).' },
+      { id: 'D', text: 'Keep Informed (treat identically to general consumer newsletter subscribers).' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In Mendelow’s Matrix, High Power / Low Interest stakeholders must be "Kept Satisfied". Their latent power can disrupt operations if antagonized, but unnecessary promotional noise risks provoking unwanted regulatory intervention.',
+      distractorAnalysis: {
+        'B': 'Manage Closely is reserved for High Power / High Interest stakeholders.',
+        'C': 'Minimal Effort applies to Low Power / Low Interest stakeholders.',
+        'D': 'Keep Informed applies to Low Power / High Interest stakeholders (e.g. community interest groups).'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.3 (Stakeholder Management: Mendelow’s Power/Interest Matrix)'
+    }
+  },
+  {
+    id: 123,
+    loId: 'LO2',
+    criterionId: '2.2',
+    commandVerb: 'Appraise',
+    difficulty: 'advanced',
+    scenario: 'A diversified conglomerate’s BCG Matrix reveals that its core industrial chemicals division is a "Cash Cow" generating £15M in annual surplus cash flows with minimal market growth (1.5% YoY), while its green hydrogen division is a high-growth "Question Mark" requiring capital.',
+    question: 'What strategic capital reallocation does the BCG Growth-Share model prescribe?',
+    options: [
+      { id: 'A', text: 'Milk the Cash Cow’s operating cash flows to fund research, scaling, and market share capture in the Question Mark division to transform it into a future Star.' },
+      { id: 'B', text: 'Reinvest 100% of cash flows back into the Cash Cow to artificially accelerate market growth rate.' },
+      { id: 'C', text: 'Immediately liquidate the Cash Cow at fire-sale prices.' },
+      { id: 'D', text: 'Starve both divisions of capital and distribute all funds as executive holiday bonuses.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'The fundamental logic of the BCG Portfolio Matrix is capital recycling: mature Cash Cows generate surplus cash that must be harvested to finance the heavy R&D and marketing expenditures needed to turn Question Marks into dominant Stars.',
+      distractorAnalysis: {
+        'B': 'Mature markets have low market growth; over-investing in Cash Cows destroys capital.',
+        'C': 'Liquidating cash-generative assets destroys the firm’s funding engine.',
+        'D': 'Non-commercial distractor.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.2 (Portfolio analysis: BCG Growth-Share Matrix)'
+    }
+  },
+  {
+    id: 124,
+    loId: 'LO3',
+    criterionId: '3.1',
+    commandVerb: 'Evaluate',
+    difficulty: 'intermediate',
+    scenario: 'A consumer electronics maker decides to pursue Ansoff’s "Diversification" quadrant by developing and marketing commercial agricultural drone software in a foreign geographic territory where it has never operated.',
+    question: 'How should the Chief Marketing Officer evaluate the strategic risk profile of this option compared to Market Penetration?',
+    options: [
+      { id: 'A', text: 'Diversification carries the highest risk profile because the firm operates simultaneously with unfamiliar products and unfamiliar markets, lacking established capabilities in both.' },
+      { id: 'B', text: 'Diversification carries zero operational risk because farming markets never experience competition.' },
+      { id: 'C', text: 'Market Penetration carries significantly higher risk than Diversification.' },
+      { id: 'D', text: 'Both options have identical zero-risk profiles under modern corporate law.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In Ansoff’s Matrix, Diversification involves both new products and new markets, requiring unfamiliar capabilities and customer knowledge, creating the highest commercial failure rate compared to Market Penetration (existing products in existing markets).',
+      distractorAnalysis: {
+        'B': 'Agricultural tech is highly competitive and volatile.',
+        'C': 'Market Penetration carries the lowest risk profile in Ansoff’s matrix.',
+        'D': 'All strategic moves carry risk; Diversification is the highest.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.1 (Ansoff Growth Matrix risk evaluation)'
+    }
+  },
+  {
+    id: 125,
+    loId: 'LO3',
+    criterionId: '3.1',
+    commandVerb: 'Explain',
+    difficulty: 'intermediate',
+    scenario: 'Kim and Mauborgne’s "Blue Ocean Strategy" contrasts Red Oceans (crowded market space where rivals fight for share) with Blue Oceans.',
+    question: 'What is the cornerstone concept of Blue Ocean Strategy that allows a firm to break the traditional cost-value trade-off?',
+    options: [
+      { id: 'A', text: 'Value Innovation: simultaneously pursuing differentiation and low cost by eliminating and reducing industry factors while raising and creating new buyer values.' },
+      { id: 'B', text: 'Aggressive price undercutting below marginal cost until all rivals enter bankruptcy.' },
+      { id: 'C', text: 'Doubling television advertising budgets on major national channels.' },
+      { id: 'D', text: 'Restricting product availability to only 10 customers worldwide.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Value Innovation rejects the conventional compromise between low cost and high differentiation. Through the Four Actions Framework (Eliminate, Reduce, Raise, Create), a firm unlocks uncontested market space (Blue Ocean) and renders competition irrelevant.',
+      distractorAnalysis: {
+        'B': 'Predatory price cutting leads to bloody Red Ocean price wars.',
+        'C': 'Increasing advertising spend within existing boundaries is a classic Red Ocean tactic.',
+        'D': 'Artificial extreme scarcity is a luxury niche tactic, not Value Innovation.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.1 (Strategic options: Blue Ocean Strategy & Value Innovation)'
+    }
+  },
+  {
+    id: 126,
+    loId: 'LO3',
+    criterionId: '3.2',
+    commandVerb: 'Justify',
+    difficulty: 'advanced',
+    scenario: 'An executive board evaluates three competing market expansion proposals using Johnson, Scholes & Whittington’s SFA framework (Suitability, Feasibility, Acceptability).',
+    question: 'Which evaluation criterion specifically investigates whether the organisation possesses the operational skills, technology, working capital, and supply chain capacity to execute the strategy?',
+    options: [
+      { id: 'A', text: 'Feasibility' },
+      { id: 'B', text: 'Suitability' },
+      { id: 'C', text: 'Acceptability' },
+      { id: 'D', text: 'Desirability' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In the SFA model: Suitability assesses whether the option addresses strategic drivers (PESTEL, SWOT, objectives); Feasibility evaluates practical capability (resources, funding, skills, time); Acceptability measures expected outcomes for stakeholders (ROMI, risk, payback).',
+      distractorAnalysis: {
+        'B': 'Suitability assesses strategic fit with environmental opportunities.',
+        'C': 'Acceptability evaluates financial return and stakeholder risk tolerance.',
+        'D': 'Desirability is not an official pillar of the SFA framework.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.2 (Evaluating strategic options: SFA Framework)'
+    }
+  },
+  {
+    id: 127,
+    loId: 'LO4',
+    criterionId: '4.1',
+    commandVerb: 'Analyse',
+    difficulty: 'advanced',
+    scenario: 'According to Kevin Lane Keller’s Customer-Based Brand Equity (CBBE) pyramid, brand building progresses through four ascending tiers: Identity (Salience), Meaning (Performance & Imagery), Response (Judgments & Feelings), and Relationships.',
+    question: 'What is the pinnacle tier of Keller’s CBBE pyramid that represents intense, active loyalty and community advocacy?',
+    options: [
+      { id: 'A', text: 'Brand Resonance' },
+      { id: 'B', text: 'Brand Salience' },
+      { id: 'C', text: 'Brand Imagery' },
+      { id: 'D', text: 'Brand Recall' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Brand Resonance sits at the apex of Keller’s CBBE model, characterized by deep psychological bonding, repeat transactional commitment, active brand community attachment, and evangelism.',
+      distractorAnalysis: {
+        'B': 'Brand Salience is the foundational bottom tier (awareness/identity).',
+        'C': 'Brand Imagery is a second-tier element of Brand Meaning.',
+        'D': 'Brand Recall is a subset of Salience.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 4.1 (Brand positioning & Keller’s Brand Equity CBBE Pyramid)'
+    }
+  },
+  {
+    id: 128,
+    loId: 'LO4',
+    criterionId: '4.2',
+    commandVerb: 'Assess',
+    difficulty: 'intermediate',
+    scenario: 'A marketing team constructs a 2-dimensional Perceptual Brand Positioning Map plotting competitors on axes of "Price Point" (Budget vs Premium) and "Delivery Speed" (Standard 3-day vs Same-Day Express). They spot an empty cluster in the "Budget Price + Same-Day Express" quadrant.',
+    question: 'How should the marketing strategist assess this unoccupied space (market whitespace)?',
+    options: [
+      { id: 'A', text: 'Evaluate whether the whitespace represents a genuine unfulfilled customer demand with viable unit economics, or an economically unfeasible service proposition that rivals intentionally avoided.' },
+      { id: 'B', text: 'Assume automatically that whitespace guarantees instant profitability without checking operational delivery costs.' },
+      { id: 'C', text: 'Reposition the brand to match the most crowded cluster on the map.' },
+      { id: 'D', text: 'Discontinue perceptual mapping because spatial plots have no commercial relevance.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Whitespace on a perceptual map can indicate an attractive blue ocean or an economically unsustainable proposition (e.g. delivering same-day express at rock-bottom prices may destroy margins). A strategist must validate operational viability and unit economics before positioning.',
+      distractorAnalysis: {
+        'B': 'Unexamined whitespace often masks structural unprofitability.',
+        'C': 'Clustering in crowded space maximizes red ocean rivalry.',
+        'D': 'Perceptual mapping is a core Level 6 positioning framework.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 4.2 (Positioning strategies & Perceptual Mapping whitespace)'
+    }
+  },
+  {
+    id: 129,
+    loId: 'LO4',
+    criterionId: '4.3',
+    commandVerb: 'Formulate',
+    difficulty: 'intermediate',
+    scenario: 'A CEO instructs the marketing lead: "We need to dramatically improve our social media presence this year."',
+    question: 'Which reformulated objective best satisfies the Level 6 SMART criteria required by CIM examiners?',
+    options: [
+      { id: 'A', text: 'Increase qualified B2B website demo requests from LinkedIn by 35% (from 400 to 540 per month) at a CPL below £45 by December 31, 2026.' },
+      { id: 'B', text: 'Post interesting content on social media whenever the marketing intern has spare time.' },
+      { id: 'C', text: 'Become the greatest social media company in the history of the world as quickly as possible.' },
+      { id: 'D', text: 'Gain 10 million followers on TikTok regardless of relevance to commercial products.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'A SMART objective must be Specific (LinkedIn demo requests), Measurable (+35%, 400 to 540/mo), Achievable/Realistic (CPL < £45), Relevant (tied to commercial pipeline), and Time-bound (by Dec 31, 2026).',
+      distractorAnalysis: {
+        'B': 'Vague, unmeasured, and lacks time boundaries.',
+        'C': 'Hyperbolic aspiration with zero SMART parameters.',
+        'D': 'Vanity follower metric detached from commercial B2B revenue and timeline.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 4.3 (SMART Marketing Objectives & Performance Alignment)'
+    }
+  },
+  {
+    id: 130,
+    loId: 'LO5',
+    criterionId: '5.1',
+    commandVerb: 'Distinguish',
+    difficulty: 'intermediate',
+    scenario: 'PR Smith’s SOSTAC® model comprises: Situation Analysis, Objectives, Strategy, Tactics, Action, and Control.',
+    question: 'How do CIM examiners distinguish between "Strategy" and "Tactics" within SOSTAC®?',
+    options: [
+      { id: 'A', text: 'Strategy defines the overarching direction and long-term pathway to achieve objectives (e.g. target segment, positioning, Ansoff focus), whereas Tactics define the specific, short-term operational marketing mix tools (ePs).' },
+      { id: 'B', text: 'Strategy and Tactics are identical interchangeable synonyms.' },
+      { id: 'C', text: 'Strategy is executed by junior copywriters, whereas Tactics are determined by the board of directors.' },
+      { id: 'D', text: 'Tactics are formulated first, and strategy is written afterward to justify the expenses.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In SOSTAC®, Strategy provides the "big picture" guiding framework (STP, competitive advantage, directional choices), while Tactics represent the operational execution (7Ps details, campaigns, channels).',
+      distractorAnalysis: {
+        'B': 'Confusing strategy with tactics is an automatic deduction in CIM assessments.',
+        'C': 'Inverts organizational hierarchy.',
+        'D': 'Tactics must cascade from strategy, never the reverse.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 5.1 (SOSTAC® Framework: Strategy vs Tactics)'
+    }
+  },
+  {
+    id: 131,
+    loId: 'LO5',
+    criterionId: '5.2',
+    commandVerb: 'Assess',
+    difficulty: 'intermediate',
+    scenario: 'In Booms & Bitner’s extended 7Ps marketing mix for service organisations (Product, Price, Place, Promotion, People, Process, Physical Evidence), a digital banking startup reviews customer abandonment during onboarding.',
+    question: 'Which of the 7Ps elements directly encompasses the digital KYC identity verification flow, form steps, and account approval latency?',
+    options: [
+      { id: 'A', text: 'Process' },
+      { id: 'B', text: 'Price' },
+      { id: 'C', text: 'Promotion' },
+      { id: 'D', text: 'Place' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In the 7Ps, "Process" encompasses the systems, procedures, steps, and flow of activities by which a service is delivered to the customer. Onboarding friction and KYC verification speeds are core Process determinants.',
+      distractorAnalysis: {
+        'B': 'Price relates to interest rates, subscription fees, and fee schedules.',
+        'C': 'Promotion covers advertising, PR, and lead acquisition.',
+        'D': 'Place relates to distribution channels and accessibility.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 5.2 (The 7Ps Marketing Mix for Services & Digital Customer Journeys)'
+    }
+  },
+  {
+    id: 132,
+    loId: 'LO5',
+    criterionId: '5.1',
+    commandVerb: 'Appraise',
+    difficulty: 'advanced',
+    scenario: 'A strategy team creates a 6-month marketing plan allocating £250,000 to launch an enterprise software product. However, the plan fails to allocate time or budget for sales engineer training and customer onboarding specialists.',
+    question: 'Under the 5Ms resource framework, what operational failure is imminent?',
+    options: [
+      { id: 'A', text: 'A critical deficit in "Men" (human talent and specialized technical capability), causing customer onboarding bottlenecks despite adequate "Money".' },
+      { id: 'B', text: 'An immediate breach of international trademark treaties.' },
+      { id: 'C', text: 'A failure of statutory corporate accounting filing deadlines.' },
+      { id: 'D', text: 'An unavoidable collapse of internet service providers.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'A successful marketing plan requires equilibrium across the 5Ms (Men, Money, Materials, Minutes, Measurements). Investing capital (Money) without ensuring trained personnel (Men) leads to operational bottlenecks and implementation failure.',
+      distractorAnalysis: {
+        'B': 'Internal staffing imbalances do not violate trademark treaties.',
+        'C': 'Accounting filings are corporate administrative tasks, not the direct risk here.',
+        'D': 'Irrelevant infrastructure distractor.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 5.1 (5Ms Resource Allocation & Implementation Equilibrium)'
+    }
+  },
+  {
+    id: 133,
+    loId: 'LO5',
+    criterionId: '5.3',
+    commandVerb: 'Recommend',
+    difficulty: 'advanced',
+    scenario: 'A legacy manufacturing corporation struggles with severe internal department resistance when shifting toward an agile digital customer-first marketing strategy.',
+    question: 'Which change management framework provides an 8-step process beginning with "Creating a Sense of Urgency" and building a "Guiding Coalition"?',
+    options: [
+      { id: 'A', text: 'John Kotter’s 8-Step Change Model' },
+      { id: 'B', text: 'Porter’s Generic Value Chain' },
+      { id: 'C', text: 'Ansoff’s Matrix' },
+      { id: 'D', text: 'Boston Consulting Group Matrix' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Kotter’s 8-Step Process is the established change management framework for marketing strategy implementation, progressing from creating urgency and guiding coalitions to generating short-term wins and anchoring changes in corporate culture.',
+      distractorAnalysis: {
+        'B': 'Porter’s Value Chain maps primary and support activities for margin creation.',
+        'C': 'Ansoff’s Matrix analyzes product-market growth directions.',
+        'D': 'BCG Matrix categorizes business unit portfolio cash flows.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 5.3 (Managing Change & Kotter’s 8-Step Change Framework)'
+    }
+  },
+  {
+    id: 134,
+    loId: 'LO6',
+    criterionId: '6.1',
+    commandVerb: 'Evaluate',
+    difficulty: 'intermediate',
+    scenario: 'Kaplan & Norton’s Balanced Scorecard translates strategic marketing goals into comprehensive performance metrics across four balanced perspectives.',
+    question: 'Which four perspectives constitute the Balanced Scorecard?',
+    options: [
+      { id: 'A', text: 'Financial, Customer, Internal Business Processes, and Learning & Growth' },
+      { id: 'B', text: 'Political, Economic, Social, and Technological' },
+      { id: 'C', text: 'Strengths, Weaknesses, Opportunities, and Threats' },
+      { id: 'D', text: 'Product, Price, Place, and Promotion' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'The Balanced Scorecard balances lagging Financial metrics with forward-looking indicators across Customer satisfaction, Internal operational efficiency, and Learning/Growth capabilities.',
+      distractorAnalysis: {
+        'B': 'Describes PEST macro-environmental analysis.',
+        'C': 'Describes SWOT analysis.',
+        'D': 'Describes the traditional 4Ps marketing mix.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 6.1 (Balanced Scorecard & Marketing Governance)'
+    }
+  },
+  {
+    id: 135,
+    loId: 'LO6',
+    criterionId: '6.1',
+    commandVerb: 'Distinguish',
+    difficulty: 'intermediate',
+    scenario: 'A marketing dashboard tracks: Metric X (Monthly Recurring Revenue and Gross Profit) and Metric Y (Website Content Engagement Depth and Product Demo Booking Velocity).',
+    question: 'How should the marketing director categorize Metric X and Metric Y regarding performance lead-time?',
+    options: [
+      { id: 'A', text: 'Metric X is a Lagging Indicator (reports historical financial results); Metric Y is a Leading Indicator (predicts future revenue pipeline).' },
+      { id: 'B', text: 'Metric X is a Leading Indicator; Metric Y is a Lagging Indicator.' },
+      { id: 'C', text: 'Both Metric X and Y are identical vanity metrics with zero commercial value.' },
+      { id: 'D', text: 'Neither metric can be measured in digital marketing.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Lagging indicators (revenue, profit) measure past outcomes that have already occurred. Leading indicators (engagement, demo bookings) measure early customer activity that directly forecasts future pipeline and revenue realization.',
+      distractorAnalysis: {
+        'B': 'Inverts the core definitions of leading and lagging metrics.',
+        'C': 'Revenue and demo velocity are mission-critical commercial metrics, not vanity metrics.',
+        'D': 'Both metrics are routinely tracked in modern analytics platforms.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 6.1 (Leading vs Lagging Performance Indicators & Metric Dashboards)'
+    }
+  },
+  {
+    id: 136,
+    loId: 'LO6',
+    criterionId: '6.2',
+    commandVerb: 'Critically Evaluate',
+    difficulty: 'advanced',
+    scenario: 'A traditional corporate strategy document was locked for 3 years without revision. Despite rapidly emerging competitors and shifting consumer preferences, the marketing team continued spending on original campaign tactics.',
+    question: 'What organizational failure has occurred, and how does Agile Marketing Governance prevent it?',
+    options: [
+      { id: 'A', text: 'Strategic Drift has occurred; Agile Marketing prevents this by deploying rapid quarterly review sprints, continuous customer feedback loops, and dynamic resource reallocation.' },
+      { id: 'B', text: 'The organization has achieved optimal strategic consistency by ignoring customer trends.' },
+      { id: 'C', text: 'An unavoidable macroeconomic collapse that no marketing control system could ever influence.' },
+      { id: 'D', text: 'A failure caused solely by not having an official TikTok account.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Strategic Drift occurs when organizational strategy fails to adapt to gradual or rapid environmental changes, leading to declining competitiveness. Agile marketing governance counters drift via continuous monitoring, flexible budgeting, and iterative campaign adjustment.',
+      distractorAnalysis: {
+        'B': 'Rigid adherence to outdated strategy is the definition of drift, not optimal consistency.',
+        'C': 'Market monitoring and adaptive control are designed specifically to anticipate such changes.',
+        'D': 'Trivial distractor ignoring strategic governance.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 6.2 (Preventing Strategic Drift & Agile Strategic Governance)'
+    }
   }
 ];

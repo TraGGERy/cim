@@ -43,6 +43,19 @@ export default function FormulaCalculator({ isOpen, onClose }: FormulaCalculator
     } else if (f.id === 'variance') {
       initialInputs['B'] = 100000;
       initialInputs['A'] = 115000;
+    } else if (f.id === 'ped') {
+      initialInputs['dQ'] = -15;
+      initialInputs['dP'] = 10;
+    } else if (f.id === 'crr') {
+      initialInputs['E'] = 8200;
+      initialInputs['N'] = 1200;
+      initialInputs['S'] = 8000;
+    } else if (f.id === 'mos') {
+      initialInputs['Sales'] = 500000;
+      initialInputs['BE'] = 375000;
+    } else if (f.id === 'payback') {
+      initialInputs['I'] = 120000;
+      initialInputs['CF'] = 40000;
     }
     setInputs(initialInputs);
   };

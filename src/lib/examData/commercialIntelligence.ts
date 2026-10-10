@@ -547,15 +547,14 @@ export const COMMERCIAL_INTELLIGENCE_EXAM_QUESTIONS: ExamQuestion[] = [
   }
 ];
 
-// Helper to get 45 questions or generate adaptive mock sets
+// Helper to get all 45 questions for the official 90-minute assessment
 export function getCommercialIntelligenceExamQuestions(): ExamQuestion[] {
-  // If we have 20 pre-authored, let's auto-pad with syllabus-accurate generated scenarios to deliver exactly 45 questions!
   const base = [...COMMERCIAL_INTELLIGENCE_EXAM_QUESTIONS];
   
-  // Ensure we reach 45 questions by procedurally varying LOs according to official CIM distribution:
-  // LO1 (Metrics): ~18 questions (40%)
-  // LO2 (Resource Management): ~13 questions (30%)
-  // LO3 (Budgeting & Forecasting): ~14 questions (30%)
+  // Official CIM distribution:
+  // LO1 (Performance Metrics): 18 questions (40%)
+  // LO2 (Resource Audit & Market Intelligence): 13 questions (30%)
+  // LO3 (Budgeting, Forecasting & Attribution): 14 questions (30%)
   
   const additionalQuestions: ExamQuestion[] = [
     {
@@ -652,7 +651,9 @@ export function getCommercialIntelligenceExamQuestions(): ExamQuestion[] {
       explanation: {
         rationale: 'Seasonally Adjusted Forecast = Trend Value × Seasonal Index = £450,000 × 1.25 = £562,500.',
         calculationSteps: [
-          'Forecast = £450,000 * 1.25 = £562,500'
+          'Trend Value = £450,000',
+          'Seasonal Index = 1.25',
+          'Forecast = £450,000 × 1.25 = £562,500'
         ],
         distractorAnalysis: {
           'B': 'Divides by 1.25 instead of multiplying (£450k / 1.25 = £360k).',
@@ -681,7 +682,7 @@ export function getCommercialIntelligenceExamQuestions(): ExamQuestion[] {
         rationale: 'Linear Attribution distributes 100% of conversion credit equally across all recorded touchpoints. With 4 touchpoints, each receives 25% of £500 = £125.',
         calculationSteps: [
           '4 touchpoints -> each touchpoint gets 1/4 = 25%',
-          'Credit = £500 * 0.25 = £125'
+          'Credit = £500 × 0.25 = £125'
         ],
         distractorAnalysis: {
           'B': 'This would be Last-Touch attribution.',
@@ -690,9 +691,575 @@ export function getCommercialIntelligenceExamQuestions(): ExamQuestion[] {
         },
         syllabusReference: 'CIM Commercial Intelligence Specification LO 3.3 (Apply marketing attribution techniques)'
       }
+    },
+    {
+      id: 26,
+      loId: 'LO1',
+      criterionId: '1.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'advanced',
+      scenario: 'A direct-to-consumer brand increases the retail price of its flagship subscription from £80 to £92 per year (+15%). Over the subsequent quarter, unit subscriber renewals fall from 2,000 to 1,760 (-12%).',
+      question: 'Determine the Price Elasticity of Demand (PED) and identify whether total renewal revenue increased or decreased.',
+      options: [
+        { id: 'A', text: 'PED = -0.80 (Inelastic); Total revenue increased from £160,000 to £161,920' },
+        { id: 'B', text: 'PED = -1.25 (Elastic); Total revenue decreased from £160,000 to £155,000' },
+        { id: 'C', text: 'PED = -0.80 (Inelastic); Total revenue decreased from £184,000 to £160,000' },
+        { id: 'D', text: 'PED = +0.80 (Unitary); Total revenue remained exactly unchanged' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'PED = % Change in Quantity Demanded / % Change in Price = -12% / +15% = -0.80. Because |PED| < 1, demand is inelastic; the percentage gain in price outweighs the percentage drop in volume, causing total revenue to rise from £160,000 (2,000 × £80) to £161,920 (1,760 × £92).',
+        calculationSteps: [
+          '% Change in Quantity = ((1,760 - 2,000) / 2,000) × 100% = -12%',
+          '% Change in Price = ((£92 - £80) / £80) × 100% = +15%',
+          'PED = -12% / 15% = -0.80 (|PED| < 1 -> Price Inelastic)',
+          'Initial Revenue = 2,000 × £80 = £160,000',
+          'New Revenue = 1,760 × £92 = £161,920 (+£1,920 uplift)'
+        ],
+        distractorAnalysis: {
+          'B': 'Inverts the PED formula (% change in price / % change in quantity = 15 / 12 = 1.25) and incorrectly assumes revenue declined.',
+          'C': 'Calculates PED correctly but falsely claims total revenue fell.',
+          'D': 'Ignores the sign and falsely asserts unitary neutrality.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 1.1 (Price Elasticity of Demand & Revenue Optimization)'
+      }
+    },
+    {
+      id: 27,
+      loId: 'LO1',
+      criterionId: '1.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'A specialist B2B training firm has monthly fixed marketing overheads of £40,000. It sells course seats at £50 each with variable delivery costs of £25 per seat. Current monthly volume is 2,500 seats (£125,000 revenue).',
+      question: 'Determine the Margin of Safety (MoS) as a percentage of current sales revenue.',
+      options: [
+        { id: 'A', text: '36.0%' },
+        { id: 'B', text: '64.0%' },
+        { id: 'C', text: '25.0%' },
+        { id: 'D', text: '50.0%' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Unit Contribution = Price (£50) - Variable Cost (£25) = £25. Break-Even Volume = Fixed Overheads (£40,000) / £25 = 1,600 units. Break-Even Revenue = 1,600 × £50 = £80,000. Margin of Safety = [(Current Sales £125,000 - Break-Even Sales £80,000) / Current Sales £125,000] × 100% = (£45,000 / £125,000) × 100% = 36.0%.',
+        calculationSteps: [
+          'Contribution Margin = £50 - £25 = £25/unit',
+          'Break-Even Units = £40,000 / £25 = 1,600 units',
+          'Break-Even Sales = 1,600 × £50 = £80,000',
+          'Margin of Safety = (£125,000 - £80,000) / £125,000 × 100% = 36.0%'
+        ],
+        distractorAnalysis: {
+          'B': 'Calculates Break-Even revenue as a percentage of total sales (£80k / £125k = 64%).',
+          'C': 'Mistakes the variable cost percentage for the margin of safety.',
+          'D': 'Calculates the gross margin percentage (£25 / £50 = 50%).'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 1.1 (Cost-volume-profit analysis & Margin of Safety)'
+      }
+    },
+    {
+      id: 28,
+      loId: 'LO1',
+      criterionId: '1.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'A marketing team invests £150,000 in an enterprise Marketing Automation Platform. The software reduces manual agency fees and boosts automated email conversions, generating £50,000 in net incremental cash margin each year.',
+      question: 'Determine the simple payback period for this marketing capital expenditure.',
+      options: [
+        { id: 'A', text: '3.0 years (36 months)' },
+        { id: 'B', text: '2.0 years (24 months)' },
+        { id: 'C', text: '5.0 years (60 months)' },
+        { id: 'D', text: '0.33 years (4 months)' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Simple Payback Period = Initial Capital Investment / Annual Net Incremental Cash Inflow = £150,000 / £50,000 = 3.0 years (36 months).',
+        calculationSteps: [
+          'Capital Outlay = £150,000',
+          'Annual Net Cash Inflow = £50,000',
+          'Payback Period = £150,000 / £50,000 = 3.0 years'
+        ],
+        distractorAnalysis: {
+          'B': 'Underestimates the time required to recoup capital.',
+          'C': 'Calculates an arbitrary conservative recovery period.',
+          'D': 'Divides annual inflow by total outlay (£50k / £150k = 0.33) rather than outlay by inflow.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 1.1 (Capital budgeting metrics: Payback period)'
+      }
+    },
+    {
+      id: 29,
+      loId: 'LO1',
+      criterionId: '1.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'A B2B cloud vendor starts the fiscal year with 800 contracted accounts. During the year, 96 accounts cancel, while 140 new enterprise accounts are acquired, concluding the year with 844 accounts.',
+      question: 'Determine the Customer Retention Rate (CRR) for the year.',
+      options: [
+        { id: 'A', text: '88.0%' },
+        { id: 'B', text: '12.0%' },
+        { id: 'C', text: '105.5%' },
+        { id: 'D', text: '82.5%' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Customer Retention Rate = [(End Customers - New Acquired) / Start Customers] × 100% = [(844 - 140) / 800] × 100% = (704 / 800) × 100% = 88.0%. Note that Churn Rate = 100% - 88% = 12.0%.',
+        calculationSteps: [
+          'Customers at Start (S) = 800',
+          'Customers at End (E) = 844',
+          'New Customers Added (N) = 140',
+          'Retained Original Customers = E - N = 844 - 140 = 704',
+          'CRR = (704 / 800) × 100% = 88.0%'
+        ],
+        distractorAnalysis: {
+          'B': 'This is the Churn Rate (96 / 800 = 12.0%), not the Retention Rate.',
+          'C': 'Divides End customers by Start customers without subtracting newly acquired accounts (844 / 800 = 105.5%).',
+          'D': 'Calculates the ratio of retained customers over total ending customers (704 / 844 = 83.4%).'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 1.1 (Customer retention rate & Customer lifetime tenure)'
+      }
+    },
+    {
+      id: 30,
+      loId: 'LO1',
+      criterionId: '1.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'advanced',
+      scenario: 'A mobile SaaS application has an Average Revenue Per User (ARPU) of £40 per month, operates at a 75% gross profit margin, and experiences a constant monthly customer churn rate of 2.5%.',
+      question: 'Determine the Customer Lifetime Value (CLV).',
+      options: [
+        { id: 'A', text: '£1,200' },
+        { id: 'B', text: '£1,600' },
+        { id: 'C', text: '£300' },
+        { id: 'D', text: '£3,000' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Monthly Gross Profit Margin per User = £40 × 75% = £30.00. Average Customer Lifespan = 1 / Churn Rate = 1 / 0.025 = 40 months. Customer Lifetime Value (CLV) = Monthly Gross Margin × Lifespan = £30 × 40 = £1,200.',
+        calculationSteps: [
+          'Monthly Margin = £40 × 0.75 = £30.00',
+          'Average Lifespan = 1 / 0.025 = 40 months',
+          'CLV = £30.00 × 40 = £1,200'
+        ],
+        distractorAnalysis: {
+          'B': 'Omits the 75% gross profit margin and calculates revenue lifetime (£40 / 0.025 = £1,600).',
+          'C': 'Divides monthly margin by 10% instead of 2.5%.',
+          'D': 'Multiplies by annual instead of monthly factors without adjusting churn period.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 1.1 (CLV, ARPU, Gross Margin & Attrition)'
+      }
+    },
+    {
+      id: 31,
+      loId: 'LO2',
+      criterionId: '2.1',
+      commandVerb: 'Appraise',
+      difficulty: 'intermediate',
+      scenario: 'A company conducting an internal marketing resource audit under the 5Ms framework identifies that its creative designers, MarTech specialists, and data analysts are spending 45% of their working hours manually copy-pasting report data into slide decks.',
+      question: 'Under the 5Ms framework, which resource bottleneck is directly impairing marketing velocity?',
+      options: [
+        { id: 'A', text: 'Minutes (inefficient time utilisation and delayed operational lead-times)' },
+        { id: 'B', text: 'Money (insufficient equity financing from venture capital)' },
+        { id: 'C', text: 'Materials (physical packaging and raw production inputs)' },
+        { id: 'D', text: 'Measurements (absence of registered trademarks)' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'In the 5Ms framework, "Minutes" represents time management, task scheduling, and operational cycle speed. Wasting 45% of working hours on repetitive manual administration represents a severe "Minutes" deficiency that directly curtails marketing responsiveness.',
+        distractorAnalysis: {
+          'B': 'Money relates to budgets and cash flow, not hours spent on administrative tasks.',
+          'C': 'Materials covers physical assets and software tools, not labor time allocation.',
+          'D': 'Trademarks are legal assets, not measurement metrics.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.1 (5 Ms – men, money, materials, minutes, measurements)'
+      }
+    },
+    {
+      id: 32,
+      loId: 'LO2',
+      criterionId: '2.1',
+      commandVerb: 'Justify',
+      difficulty: 'advanced',
+      scenario: 'An omnichannel retailer discovers that customer transaction data is trapped in separate silos across physical POS tills, an iOS mobile app, an e-commerce Magento site, and a Zendesk customer service portal.',
+      question: 'Which enterprise data solution should be justified to create a single, unified commercial customer profile?',
+      options: [
+        { id: 'A', text: 'Implement a Customer Data Platform (CDP) with real-time deterministic and probabilistic identity stitching' },
+        { id: 'B', text: 'Deploy an offline spreadsheet macro updated once per quarter by junior staff' },
+        { id: 'C', text: 'Replace all digital customer communication with mass paper mailers' },
+        { id: 'D', text: 'Isolate each channel completely to avoid cross-department data sharing' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'A Customer Data Platform (CDP) aggregates first-party customer data across disparate online and offline touchpoints, executing identity resolution to build a persistent single customer view for attribution and segmentation.',
+        distractorAnalysis: {
+          'B': 'Quarterly spreadsheet macros are error-prone, static, and cannot handle streaming data.',
+          'C': 'Direct mail does nothing to solve omnichannel digital fragmentation.',
+          'D': 'Isolating channels cements data silos, preventing commercial intelligence.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.1 (Customer Data Platforms, Single Customer View & Systems Integration)'
+      }
+    },
+    {
+      id: 33,
+      loId: 'LO2',
+      criterionId: '2.2',
+      commandVerb: 'Critically Evaluate',
+      difficulty: 'advanced',
+      scenario: 'A brand planning an entry into an emerging market relies solely on a 4-year-old syndicated secondary research report to forecast adoption rates of electric commercial vans.',
+      question: 'Critically evaluate the commercial validity of relying exclusively on this secondary data source.',
+      options: [
+        { id: 'A', text: 'Secondary data provides valuable macro context but lacks temporal freshness and context-specific granularity; primary research is essential to validate current buyer willingness-to-pay.' },
+        { id: 'B', text: 'Secondary data is always legally binding and guaranteed to be 100% accurate across all emerging market territories.' },
+        { id: 'C', text: 'Primary research should never be conducted because it violates international ISO data standards.' },
+        { id: 'D', text: 'Historical syndicated data is superior because consumer buying preferences never change after 3 years.' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'While secondary data is cost-effective for initial scoping, in fast-evolving sectors (e.g. EV adoption), 4-year-old reports suffer from severe obsolescence. Robust commercial decision-making requires methodological triangulation with primary research.',
+        distractorAnalysis: {
+          'B': 'Secondary research carries no legal guarantee of accuracy.',
+          'C': 'Primary research is the gold standard for specific, proprietary commercial insight.',
+          'D': 'Consumer preferences in technology and mobility change rapidly.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.2 (Evaluate primary vs secondary research, currency, and reliability)'
+      }
+    },
+    {
+      id: 34,
+      loId: 'LO2',
+      criterionId: '2.2',
+      commandVerb: 'Recommend',
+      difficulty: 'intermediate',
+      scenario: 'A B2B medical diagnostics manufacturer wants to anticipate the strategic pricing moves and market retaliation of a dominant rival prior to launching a lower-priced portable scanner.',
+      question: 'Which competitor analysis framework systematically assesses a competitor’s Future Goals, Current Strategy, Assumptions, and Capabilities?',
+      options: [
+        { id: 'A', text: 'Michael Porter’s Four Corners Framework' },
+        { id: 'B', text: 'Mendelow’s Stakeholder Matrix' },
+        { id: 'C', text: 'Maslow’s Hierarchy of Needs' },
+        { id: 'D', text: 'Kotler’s Five Product Levels' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Porter’s Four Corners Framework specifically analyzes what drives a competitor (Drivers & Assumptions) and what the competitor is doing/can do (Current Strategy & Capabilities) to forecast their offensive and defensive response profile.',
+        distractorAnalysis: {
+          'B': 'Mendelow’s Matrix evaluates stakeholder power and interest, not competitor response profiles.',
+          'C': 'Maslow’s Hierarchy models human psychological motivation, not rival corporate strategy.',
+          'D': 'Kotler’s Five Product Levels defines product augmentation from core benefit to potential product.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.2 (Competitor analysis frameworks & Porter’s Four Corners)'
+      }
+    },
+    {
+      id: 35,
+      loId: 'LO2',
+      criterionId: '2.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'A software company surveys 1,000 active business users with the question: "How likely are you to recommend our platform to a colleague (0-10)?" The results are: 600 Promoters (scores 9-10), 250 Passives (scores 7-8), and 150 Detractors (scores 0-6).',
+      question: 'Determine the Net Promoter Score (NPS).',
+      options: [
+        { id: 'A', text: '+45' },
+        { id: 'B', text: '+60' },
+        { id: 'C', text: '+35' },
+        { id: 'D', text: '45%' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'NPS = % Promoters - % Detractors (Passives are ignored in the calculation). % Promoters = (600 / 1,000) × 100% = 60%. % Detractors = (150 / 1,000) × 100% = 15%. NPS = 60 - 15 = +45 (expressed as an integer from -100 to +100).',
+        calculationSteps: [
+          '% Promoters = 600 / 1,000 = 60%',
+          '% Passives = 250 / 1,000 = 25% (ignored)',
+          '% Detractors = 150 / 1,000 = 15%',
+          'NPS = 60 - 15 = +45'
+        ],
+        distractorAnalysis: {
+          'B': 'Counts only Promoters without subtracting Detractors.',
+          'C': 'Subtracts Passives from Promoters (60 - 25 = +35), confusing Passives with Detractors.',
+          'D': 'Expresses NPS as a percentage rather than the standard whole number score (+45).'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.1 (Customer satisfaction metrics, Net Promoter Score)'
+      }
+    },
+    {
+      id: 36,
+      loId: 'LO2',
+      criterionId: '2.1',
+      commandVerb: 'Appraise',
+      difficulty: 'advanced',
+      scenario: 'A fintech app identifies that B2B clients whose usage drops below 3 active logins per week have an 85% probability of churning within 60 days.',
+      question: 'How should the commercial team utilize this predictive intelligence to protect recurring revenue?',
+      options: [
+        { id: 'A', text: 'Configure automated CRM telemetry alerts to trigger proactive customer success calls and tailored workflow coaching before contract renewal.' },
+        { id: 'B', text: 'Immediately invoice the client for a contract termination penalty before they cancel.' },
+        { id: 'C', text: 'Delete the inactive user accounts to artificially inflate platform engagement metrics.' },
+        { id: 'D', text: 'Cease sending product updates to inactive clients to save email server costs.' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Predictive intelligence is commercially actionable when linked to early-warning automated workflows that proactively intervene to re-engage accounts and protect recurring revenue.',
+        distractorAnalysis: {
+          'B': 'Premature penalties alienate clients and guarantee cancellation.',
+          'C': 'Deleting users masks commercial reality and destroys valuable accounts.',
+          'D': 'Abandoning inactive clients accelerates churn.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.1 (Predictive churn analytics, CRM triggers & Customer lifecycle intervention)'
+      }
+    },
+    {
+      id: 37,
+      loId: 'LO2',
+      criterionId: '2.1',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'An artisan footwear brand generates £1,000,000 in gross revenue through third-party wholesale retailers at a 25% gross margin. Simultaneously, its direct-to-consumer (D2C) e-commerce store generates £400,000 at a 65% gross margin.',
+      question: 'Determine the total gross profit generated and identify which channel contributed the larger absolute gross profit.',
+      options: [
+        { id: 'A', text: 'Total Gross Profit is £510,000; D2C contributed larger profit (£260,000 vs £250,000)' },
+        { id: 'B', text: 'Total Gross Profit is £510,000; Wholesale contributed larger profit (£350,000 vs £160,000)' },
+        { id: 'C', text: 'Total Gross Profit is £900,000; Wholesale contributed larger profit (£650,000 vs £250,000)' },
+        { id: 'D', text: 'Total Gross Profit is £450,000; Both channels contributed identical profit (£225,000 each)' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Wholesale Gross Profit = £1,000,000 × 25% = £250,000. D2C Gross Profit = £400,000 × 65% = £260,000. Total Gross Profit = £250,000 + £260,000 = £510,000. D2C contributed £260,000, which is higher than Wholesale’s £250,000 despite having less than half the revenue.',
+        calculationSteps: [
+          'Wholesale Gross Profit = £1,000,000 × 0.25 = £250,000',
+          'D2C Gross Profit = £400,000 × 0.65 = £260,000',
+          'Total Gross Profit = £250,000 + £260,000 = £510,000',
+          'D2C (£260k) > Wholesale (£250k)'
+        ],
+        distractorAnalysis: {
+          'B': 'Miscalculates profit amounts between channels.',
+          'C': 'Adds margins directly without multiplying by revenue.',
+          'D': 'Averages the channels without calculating actual values.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.1 (Channel profitability audit, gross margins & channel mix)'
+      }
+    },
+    {
+      id: 38,
+      loId: 'LO2',
+      criterionId: '2.2',
+      commandVerb: 'Appraise',
+      difficulty: 'intermediate',
+      scenario: 'A growth hacker proposes purchasing an unverified third-party database of 500,000 scraped consumer email addresses to run an aggressive cold email campaign for financial loans.',
+      question: 'Appraise the regulatory and commercial risks of this data acquisition proposal under GDPR and privacy regulations.',
+      options: [
+        { id: 'A', text: 'Severe non-compliance risk triggering regulatory fines up to €20M or 4% of global turnover, along with domain blacklisting and brand reputational damage.' },
+        { id: 'B', text: 'Zero commercial risk because cold email is completely exempt from all European data protection laws.' },
+        { id: 'C', text: 'Only financial upside because purchased databases always convert at 45% or higher.' },
+        { id: 'D', text: 'Regulatory risk is limited to a polite administrative email warning.' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Under GDPR and ePrivacy regulations, marketing to individuals without verified consent or legitimate interest is illegal. Breaches carry statutory penalties up to €20 million or 4% of worldwide turnover, alongside severe ISP domain blacklisting and brand damage.',
+        distractorAnalysis: {
+          'B': 'Completely false; cold B2C emailing without consent is explicitly prohibited under GDPR.',
+          'C': 'Scraped third-party lists have notoriously poor conversion and high spam rates.',
+          'D': 'Data protection regulators enforce severe statutory financial penalties.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 2.2 (Data compliance, GDPR, ethical data sourcing and governance)'
+      }
+    },
+    {
+      id: 39,
+      loId: 'LO3',
+      criterionId: '3.1',
+      commandVerb: 'Justify',
+      difficulty: 'advanced',
+      scenario: 'During a corporate restructuring, the Chief Financial Officer rejects the marketing team’s traditional incremental budget proposal (+4% on last year’s spending baseline) and mandates Zero-Based Budgeting (ZBB).',
+      question: 'What is the primary commercial justification for enforcing Zero-Based Budgeting?',
+      options: [
+        { id: 'A', text: 'ZBB forces all activities and line-items to be evaluated and justified from scratch based on commercial returns and strategic alignment, eliminating historical budget bloat.' },
+        { id: 'B', text: 'ZBB automatically sets the total marketing expenditure to zero pounds for the entire year.' },
+        { id: 'C', text: 'ZBB requires marketing managers to spend 100% of their budget exclusively on print billboards.' },
+        { id: 'D', text: 'ZBB delegates all budget setting decisions to junior external contractors.' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Zero-Based Budgeting (ZBB) assumes a zero baseline for every cycle. Every program, channel, and headcount allocation must be commercially justified in terms of ROI and strategic contribution, preventing legacy inertia.',
+        distractorAnalysis: {
+          'B': 'ZBB is a justification process starting from zero, not a zero-spend mandate.',
+          'C': 'ZBB is channel-agnostic and focused on commercial return.',
+          'D': 'ZBB increases executive accountability and rigorous internal scrutiny.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.1 (Budgeting methods: Zero-based budgeting vs incremental budgeting)'
+      }
+    },
+    {
+      id: 40,
+      loId: 'LO3',
+      criterionId: '3.1',
+      commandVerb: 'Identify',
+      difficulty: 'intermediate',
+      scenario: 'A marketing director establishes that achieving a 15% regional market share requires generating 12,000 qualified leads, which demands 240,000 website visits at an estimated media cost of £180,000 plus £45,000 in creative production.',
+      question: 'Identify the marketing budgeting method utilized in this scenario.',
+      options: [
+        { id: 'A', text: 'Objective-and-Task Budgeting' },
+        { id: 'B', text: 'Affordable (All-You-Can-Afford) Method' },
+        { id: 'C', text: 'Percentage of Historical Sales Method' },
+        { id: 'D', text: 'Competitive Parity Method' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'The Objective-and-Task method defines specific commercial objectives, identifies the precise tasks required to achieve those objectives, and aggregates the costs of executing those tasks to establish the budget.',
+        distractorAnalysis: {
+          'B': 'Affordable method budgets whatever cash is left over after operational costs.',
+          'C': 'Percentage of sales ties spending to past or projected turnover regardless of tactical tasks.',
+          'D': 'Competitive parity benchmarks spend against rival firms.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.1 (Budgeting methods: Objective and task, competitive parity)'
+      }
+    },
+    {
+      id: 41,
+      loId: 'LO3',
+      criterionId: '3.2',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'A company records sales over five consecutive quarters: Q1 = £120,000; Q2 = £140,000; Q3 = £160,000; Q4 = £180,000; Q5 = £200,000.',
+      question: 'Determine the 4-quarter moving average for the period covering Q1 to Q4.',
+      options: [
+        { id: 'A', text: '£150,000' },
+        { id: 'B', text: '£160,000' },
+        { id: 'C', text: '£170,000' },
+        { id: 'D', text: '£140,000' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: '4-quarter moving average = (Q1 + Q2 + Q3 + Q4) / 4 = (£120,000 + £140,000 + £160,000 + £180,000) / 4 = £600,000 / 4 = £150,000.',
+        calculationSteps: [
+          'Sum of Q1 to Q4 = £120k + £140k + £160k + £180k = £600,000',
+          'Average = £600,000 / 4 = £150,000'
+        ],
+        distractorAnalysis: {
+          'B': 'Calculates the average of Q2 to Q5 ((140 + 160 + 180 + 200) / 4 = £170k) or chooses Q3 median.',
+          'C': 'This is the moving average for Q2-Q5.',
+          'D': 'Underestimates the average.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.2 (Time-series analysis: moving averages)'
+      }
+    },
+    {
+      id: 42,
+      loId: 'LO3',
+      criterionId: '3.3',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'Under a Position-Based (U-Shaped 40-20-40) attribution model, a £1,000 e-commerce order involves 4 interactions: 1) Google Paid Search, 2) Blog Post, 3) Retargeting Display Ad, 4) Direct Email Newsletter.',
+      question: 'Determine the revenue allocation awarded to the two middle nurturing touchpoints combined (Blog Post + Retargeting Ad).',
+      options: [
+        { id: 'A', text: '£200 total (20% combined, £100 each)' },
+        { id: 'B', text: '£400 total (40% combined, £200 each)' },
+        { id: 'C', text: '£0 total (0% middle allocation)' },
+        { id: 'D', text: '£500 total (50% combined, £250 each)' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'In a 40-20-40 Position-Based model, 40% (£400) goes to the first touchpoint, 40% (£400) goes to the final conversion touchpoint, and the remaining 20% (£200) is split equally among the middle nurturing touches. Thus, the two middle touches share £200 total (£100 each).',
+        calculationSteps: [
+          'First Touch (Paid Search) = 40% × £1,000 = £400',
+          'Last Touch (Email) = 40% × £1,000 = £400',
+          'Remaining Credit = 20% × £1,000 = £200',
+          '2 middle touches share £200 -> £100 each'
+        ],
+        distractorAnalysis: {
+          'B': 'Confuses the 20% middle share with 40%.',
+          'C': 'This represents First/Last split model with zero middle credit.',
+          'D': 'This represents an even linear distribution.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.3 (Attribution modelling: position-based U-shaped models)'
+      }
+    },
+    {
+      id: 43,
+      loId: 'LO3',
+      criterionId: '3.3',
+      commandVerb: 'Appraise',
+      difficulty: 'intermediate',
+      scenario: 'A B2C retail company compares attribution models for short-cycle impulse purchases that occur within 48 hours of initial exposure.',
+      question: 'Why does a "Time-Decay" attribution model weight recent interactions more heavily than early interactions?',
+      options: [
+        { id: 'A', text: 'It assumes touchpoints closest in time to the purchase decision had the strongest psychological impact in closing the sale.' },
+        { id: 'B', text: 'It is legally required under international digital accounting directives.' },
+        { id: 'C', text: 'It gives zero credit to any digital advertising campaign running on weekends.' },
+        { id: 'D', text: 'It artificially reduces overall advertising tax obligations.' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Time-decay attribution applies an exponential decay algorithm that gives progressively greater conversion credit to touchpoints occurring closest to the final conversion point, reflecting imminent intent.',
+        distractorAnalysis: {
+          'B': 'There is no legal mandate governing attribution models.',
+          'C': 'Time decay does not discriminate based on days of the week.',
+          'D': 'Attribution models do not reduce tax obligations.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.3 (Attribution techniques: time decay vs linear)'
+      }
+    },
+    {
+      id: 44,
+      loId: 'LO3',
+      criterionId: '3.2',
+      commandVerb: 'Determine',
+      isNumerical: true,
+      difficulty: 'intermediate',
+      scenario: 'A marketing team budgeted £60,000 to deliver 1,200 paying customers (£50 budgeted CAC). Actual results showed £54,000 was spent and 1,350 paying customers were acquired.',
+      question: 'Determine the spend variance and the actual Cost Per Acquisition (CAC).',
+      options: [
+        { id: 'A', text: 'Spend Variance is £6,000 Favorable; Actual CAC is £40.00' },
+        { id: 'B', text: 'Spend Variance is £6,000 Adverse; Actual CAC is £50.00' },
+        { id: 'C', text: 'Spend Variance is £14,000 Favorable; Actual CAC is £45.00' },
+        { id: 'D', text: 'Spend Variance is £6,000 Favorable; Actual CAC is £44.44' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'Spend Variance = Budgeted (£60,000) - Actual (£54,000) = +£6,000 (Favorable, since actual spend was less than budget). Actual CAC = Actual Spend (£54,000) / Actual Customers (1,350) = £40.00 per customer (a £10 improvement over the budgeted £50 CAC).',
+        calculationSteps: [
+          'Spend Variance = £60,000 - £54,000 = £6,000 Favorable',
+          'Actual CAC = £54,000 / 1,350 = £40.00'
+        ],
+        distractorAnalysis: {
+          'B': 'Under-spending is a Favorable variance, not Adverse.',
+          'C': 'Incorrectly calculates the variance.',
+          'D': 'Divides £60,000 by 1,350 (£44.44) using budgeted spend instead of actual spend.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.2 (Budget management through variance analysis & CAC efficiency)'
+      }
+    },
+    {
+      id: 45,
+      loId: 'LO3',
+      criterionId: '3.3',
+      commandVerb: 'Recommend',
+      difficulty: 'advanced',
+      scenario: 'The marketing executive committee needs a standardized quarterly governance report to ensure commercial marketing programs deliver sustained ROMI and avoid strategic drift.',
+      question: 'Which commercial governance instrument best integrates leading customer engagement indicators with lagging financial return metrics?',
+      options: [
+        { id: 'A', text: 'An Executive Marketing Balanced Scorecard linking Financial, Customer, Internal Process, and Learning/Growth perspectives' },
+        { id: 'B', text: 'A collection of uncurated raw CSV files emailed to board directors weekly' },
+        { id: 'C', text: 'A single annual informal dinner conversation with regional sales reps' },
+        { id: 'D', text: 'An isolated tracker that monitors only social media follower counts' }
+      ],
+      correctAnswer: 'A',
+      explanation: {
+        rationale: 'A Balanced Scorecard provides a comprehensive, structured governance framework balancing financial metrics (ROMI, margins), customer metrics (NPS, churn), operational processes (campaign velocity, CAC), and organizational capabilities, preventing strategic drift.',
+        distractorAnalysis: {
+          'B': 'Raw data dumps lack governance structure, synthesis, and decision clarity.',
+          'C': 'Informal chats lack objective metrics and accountability.',
+          'D': 'Vanity metrics like follower counts provide no commercial intelligence on ROMI.'
+        },
+        syllabusReference: 'CIM Commercial Intelligence Specification LO 3.3 (Commercial governance, Balanced Scorecard & Strategic control)'
+      }
     }
   ];
 
-  // Combine to create the full question pool
+  // Return the official 45-question pool
   return [...base, ...additionalQuestions];
 }
