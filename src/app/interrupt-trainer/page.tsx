@@ -83,6 +83,74 @@ const INTERRUPT_TRAINER_BANK: InterruptChallenge[] = [
     explanation: 'The bottleneck is clearly human talent and analytical skills ("Men"), requiring recruitment, upskilling, or specialized contractor support.',
     loReference: 'Commercial Intelligence LO 2.1 (5Ms Resource Management)',
     timeLimitSeconds: 30
+  },
+  {
+    id: 'it-5',
+    type: 'scenario-dilemma',
+    title: 'Nyika.app SFA Option Appraisal Dilemma',
+    context: 'Nyika is choosing between expanding 4-wheel passenger taxis in Johannesburg vs launching B2B Heavy Cargo parcel delivery in Harare and Lusaka. Parcel delivery offers 32% margin vs 14% on passenger rides.',
+    prompt: 'Under Johnson, Scholes & Whittington’s SFA framework, which strategy is justified on "Feasibility" and "Acceptability"?',
+    options: [
+      { id: 'A', text: 'B2B Cargo Delivery: leverages existing 2-wheeler tech fleet (High Feasibility) and delivers 32% gross margins with predictable B2B cash flows (High Acceptability).' },
+      { id: 'B', text: '4-Wheel Passenger Taxis in SA: High capital cost and direct price war with Uber/Bolt.' },
+      { id: 'C', text: 'Shutting down operations in Lusaka to fund billboard advertising.' },
+      { id: 'D', text: 'Switching all payments from EcoCash to 90-day post-dated cheques.' }
+    ],
+    correctAnswer: 'A',
+    explanation: 'B2B Heavy Cargo fits SFA criteria: it utilizes existing core assets and driver routing (Feasibility) and provides superior returns and margins (Acceptability).',
+    loReference: 'Strategy & Planning LO 3.1 & LO 3.2 (SFA Framework & Ansoff)',
+    timeLimitSeconds: 40
+  },
+  {
+    id: 'it-6',
+    type: 'scenario-dilemma',
+    title: 'Zero-Based Budgeting (ZBB) Implementation',
+    context: 'Under a new commercial director, all marketing managers must justify every pound of expenditure starting from zero rather than taking last year’s spend + 5%.',
+    prompt: 'What is the principal strategic advantage of Zero-Based Budgeting under CIM LO 3.1?',
+    options: [
+      { id: 'A', text: 'It eliminates historical budget inertia and forces explicit commercial justification tied directly to expected ROMI.' },
+      { id: 'B', text: 'It guarantees an automatic 20% budget increase for digital channels.' },
+      { id: 'C', text: 'It requires zero administrative time or financial modeling.' },
+      { id: 'D', text: 'It fixes ad spend as an unchanging percentage of revenue.' }
+    ],
+    correctAnswer: 'A',
+    explanation: 'Zero-Based Budgeting stops legacy complacency by requiring every operational activity to prove its commercial value and ROMI contribution from scratch.',
+    loReference: 'Commercial Intelligence LO 3.1 (Forecasting & Strategic Budgeting)',
+    timeLimitSeconds: 35
+  },
+  {
+    id: 'it-7',
+    type: 'concept-recall',
+    title: 'Mendelow Matrix Stakeholder Strategy',
+    context: 'Municipal transport regulators in Harare have High Power over motorcycle taxi permits and lane access bylaws, but currently moderate/low direct interest in commercial apps.',
+    prompt: 'According to Mendelow’s Matrix, what is the mandatory engagement posture for this stakeholder group?',
+    options: [
+      { id: 'A', text: 'Keep Satisfied (High Power / Low Interest): proactively brief on safety standards and compliance before issues arise.' },
+      { id: 'B', text: 'Key Player / Manage Closely (High Power / High Interest).' },
+      { id: 'C', text: 'Minimal Effort (Low Power / Low Interest).' },
+      { id: 'D', text: 'Keep Informed (Low Power / High Interest).' }
+    ],
+    correctAnswer: 'A',
+    explanation: 'High Power / Low Interest stakeholders must be "Kept Satisfied" so they do not abruptly exercise their veto power to the detriment of the business.',
+    loReference: 'Strategy & Planning LO 2.3 (Stakeholder Audit & Mendelow)',
+    timeLimitSeconds: 35
+  },
+  {
+    id: 'it-8',
+    type: 'scenario-dilemma',
+    title: 'PDCA Governance & Strategic Drift Check',
+    context: 'Nyika’s monthly take-rate in Harare dipped from 12% to 8% because drivers are switching to unmetered cash rides outside the app during peak hours.',
+    prompt: 'Under the "Act" phase of the PDCA cycle, what immediate operational control must be deployed?',
+    options: [
+      { id: 'A', text: 'Introduce dynamic in-app driver milestone bonuses and instant mobile money cashbacks to enforce transaction tracking on-platform.' },
+      { id: 'B', text: 'Wait 12 months for annual review before examining the data.' },
+      { id: 'C', text: 'Delete the mobile money payment gateway.' },
+      { id: 'D', text: 'Fire all marketing staff in Zimbabwe.' }
+    ],
+    correctAnswer: 'A',
+    explanation: 'In the Act phase of PDCA, agile corrective actions align incentives (bonuses, automated mobile money escrow) to fix operational leaks and maintain governance.',
+    loReference: 'Strategy & Planning LO 6.1 (PDCA Control & Governance)',
+    timeLimitSeconds: 40
   }
 ];
 
@@ -189,7 +257,7 @@ export default function InterruptTrainerPage() {
               </div>
               <div>
                 <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider block">
-                  Scenario Intercept #{currentIndex + 1}
+                  Scenario Intercept #{(currentIndex % INTERRUPT_TRAINER_BANK.length) + 1} of {INTERRUPT_TRAINER_BANK.length}
                 </span>
                 <span className="text-[11px] text-slate-400">{currentChallenge.loReference}</span>
               </div>
@@ -198,60 +266,77 @@ export default function InterruptTrainerPage() {
             {!isAnswered && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono font-bold text-amber-400">
                 <Clock className="w-4 h-4" />
-                <span>{timeLeft}s remaining</span>
+                <span>{timeLeft}s</span>
               </div>
             )}
           </div>
 
-          {/* Prompt */}
+          {/* Scenario Context */}
           <div className="space-y-3">
-            <h2 className="text-lg sm:text-xl font-bold text-white leading-snug">{currentChallenge.title}</h2>
-            <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800/80 text-xs sm:text-sm text-slate-300 leading-relaxed">
-              <strong className="text-amber-400">Live Dilemma:</strong> {currentChallenge.context}
+            <h2 className="text-lg font-bold text-white">{currentChallenge.title}</h2>
+            <div className="p-4 bg-slate-950/80 rounded-2xl border border-slate-800 text-xs text-slate-300 leading-relaxed">
+              <strong className="text-amber-400">Operational Scenario:</strong> {currentChallenge.context}
             </div>
-            <p className="text-xs sm:text-sm font-semibold text-slate-100">{currentChallenge.prompt}</p>
+            <p className="text-xs sm:text-sm font-semibold text-slate-100 pt-1">{currentChallenge.prompt}</p>
           </div>
 
-          {/* Options */}
+          {/* Options Grid */}
           {!isAnswered ? (
             <div className="space-y-3 pt-2">
               {currentChallenge.options.map((opt) => (
                 <button
                   key={opt.id}
                   onClick={() => handleAnswer(opt.id)}
-                  className="w-full text-left p-4 rounded-2xl bg-slate-950/60 hover:bg-blue-950/40 border border-slate-800 hover:border-blue-500/60 text-xs sm:text-sm text-slate-200 transition-all flex items-start gap-3.5 group"
+                  className="w-full text-left p-4 rounded-2xl bg-slate-950/60 hover:bg-blue-950/40 border border-slate-800 hover:border-blue-500/60 text-xs sm:text-sm text-slate-200 transition-all flex items-center gap-3.5 group cursor-pointer"
                 >
                   <span className="w-7 h-7 rounded-xl bg-slate-800 group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center font-mono font-bold text-xs shrink-0 transition-colors">
                     {opt.id}
                   </span>
-                  <span className="pt-0.5 leading-relaxed">{opt.text}</span>
+                  <span className="leading-snug">{opt.text}</span>
                 </button>
               ))}
             </div>
           ) : (
+            /* Feedback Card */
             <div
-              className={`rounded-2xl p-5 border space-y-4 ${
-                isCorrect ? 'bg-emerald-950/30 border-emerald-500/40' : 'bg-rose-950/30 border-rose-500/40'
+              className={`rounded-2xl p-6 border shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-200 ${
+                isCorrect
+                  ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-100'
+                  : 'bg-rose-950/40 border-rose-500/50 text-rose-100'
               }`}
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
                   {isCorrect ? (
-                    <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                      <CheckCircle2 className="w-5 h-5" />
+                    </div>
                   ) : (
-                    <XCircle className="w-6 h-6 text-rose-400" />
+                    <div className="p-2 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30">
+                      <XCircle className="w-5 h-5" />
+                    </div>
                   )}
-                  <h4 className="text-sm font-bold text-white">
-                    {isCorrect ? 'Retrieval Challenge Passed!' : 'Active Recall Gap Detected'}
-                  </h4>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">
+                      {isCorrect ? 'Active Recall Verified!' : 'Retrieval Correction Required'}
+                    </h4>
+                    <span className="text-[11px] font-mono text-slate-400">{currentChallenge.loReference}</span>
+                  </div>
                 </div>
-                <span className="text-xs font-mono font-bold text-slate-300">
-                  Correct Answer: {currentChallenge.correctAnswer}
+
+                <span
+                  className={`text-xs font-bold px-3 py-1 rounded-xl border uppercase tracking-wider ${
+                    isCorrect
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                      : 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                  }`}
+                >
+                  {isCorrect ? '+10 XP' : 'Gap Review'}
                 </span>
               </div>
 
-              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-200 leading-relaxed">
-                <strong className="text-blue-400 block mb-1">CIM Examiner Rationale:</strong>
+              <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 text-xs text-slate-200 leading-relaxed">
+                <div className="font-semibold text-blue-400 mb-1">CIM Examiner Derivation & Rationale:</div>
                 <p className="text-slate-300">{currentChallenge.explanation}</p>
               </div>
 
@@ -260,7 +345,7 @@ export default function InterruptTrainerPage() {
                   onClick={handleNextChallenge}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20"
                 >
-                  <span>Next Interrupt Dilemma</span>
+                  <span>Next Socratic Dilemma</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

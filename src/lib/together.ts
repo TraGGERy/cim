@@ -7,12 +7,12 @@ export const FAST_TOGETHER_MODEL = 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo'
 export const TOGETHER_MODELS = [
   {
     id: 'meta-llama/Llama-3.3-70B-Instruct-Turbo',
-    name: 'Llama 3.3 70B Turbo (Recommended)',
+    name: 'Llama 3.3 70B Turbo',
     description: 'High-capability reasoning for CIM Level 6 Examiner grading (~$0.88/1M tokens)'
   },
   {
     id: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
-    name: 'Llama 3.1 8B Turbo (Ultra Fast & Cheap)',
+    name: 'Llama 3.1 8B Turbo (Ultra Fast & Low Cost)',
     description: 'Instant response times for rapid Socratic intercepts (~$0.18/1M tokens)'
   },
   {
@@ -27,11 +27,19 @@ export const TOGETHER_MODELS = [
   }
 ];
 
+// In-memory cache to prevent redundant token consumption
+const togetherResponseCache = new Map<string, unknown>();
+
+function getCacheKey(prefix: string, payload: string): string {
+  return `${prefix}:${payload.trim().replace(/\s+/g, ' ').slice(0, 300)}`;
+}
+
 export async function callTogetherChat(params: {
   systemPrompt: string;
   userPrompt: string;
   model?: string;
   temperature?: number;
+  maxTokens?: number;
   apiKey?: string;
 }): Promise<string> {
   const key = params.apiKey || getSavedTogetherApiKey();
@@ -54,7 +62,7 @@ export async function callTogetherChat(params: {
         { role: 'user', content: params.userPrompt }
       ],
       temperature: params.temperature ?? 0.2,
-      max_tokens: 2048
+      max_tokens: params.maxTokens || 600 // Constrained max tokens for budget efficiency
     })
   });
 
@@ -83,49 +91,57 @@ export async function gradeStrategyResponseTogether(params: {
   strengths: string[];
   areasForImprovement: string[];
 }> {
+  const cleanResponse = params.userResponse.trim();
+  const words = cleanResponse.split(/\s+/).filter(Boolean).length;
+
+  if (words < 10) {
+    return {
+      marksAwarded: 0,
+      grade: 'Fail',
+      examinerFeedback: 'Response is too short to evaluate. Please draft a structured answer containing case data and strategic frameworks.',
+      commandVerbCompliance: `Failed '${params.commandVerb}' requirement due to insufficient length.`,
+      strengths: [],
+      areasForImprovement: ['Provide substantive analysis with specific references to Nyika.app']
+    };
+  }
+
+  const cacheKey = getCacheKey('tg-grade', `${params.taskPrompt}:${cleanResponse}`);
+  if (togetherResponseCache.has(cacheKey)) {
+    return togetherResponseCache.get(cacheKey) as {
+      marksAwarded: number;
+      grade: 'Distinction' | 'Merit' | 'Pass' | 'Fail';
+      examinerFeedback: string;
+      commandVerbCompliance: string;
+      strengths: string[];
+      areasForImprovement: string[];
+    };
+  }
+
   const key = params.apiKey || getSavedTogetherApiKey();
 
   if (!key) {
-    // Fallback heuristic scoring if no Together API key is configured
-    const words = params.userResponse.trim().split(/\s+/).length;
     const marksAwarded = Math.min(params.marks, Math.max(6, Math.round((words / 250) * params.marks)));
     const percentage = (marksAwarded / params.marks) * 100;
     return {
       marksAwarded,
       grade: percentage >= 80 ? 'Distinction' : percentage >= 70 ? 'Merit' : percentage >= 60 ? 'Pass' : 'Fail',
-      examinerFeedback: 'Together AI Key not configured. Standard structure and word count assessment applied. Connect your Together AI API Key for line-by-line examiner commentary.',
-      commandVerbCompliance: `Assessed against Level 6 command verb '${params.commandVerb}'. Ensure deep justification, data backing, and balanced critique.`,
-      strengths: ['Addressed the case study requirements', 'Applied structured business headings'],
-      areasForImprovement: ['Deepen quantitative ROMI calculations', 'Include explicit SFA matrix criteria and risk mitigations']
+      examinerFeedback: 'Together AI Key not configured. Standard word count assessment applied. Connect your Together AI key in Settings for full review.',
+      commandVerbCompliance: `Assessed against Level 6 command verb '${params.commandVerb}'.`,
+      strengths: ['Addressed the case study requirements'],
+      areasForImprovement: ['Deepen quantitative ROMI calculations and SFA matrix criteria']
     };
   }
 
-  const systemPrompt = `You are a Senior Chief Examiner for the Chartered Institute of Marketing (CIM) evaluating a Level 6 Award in Strategy and Planning candidate.
-Grade with strict academic and commercial rigor according to the official CIM Level 6 2024 V1.1 standards.
-Grading boundaries: Distinction (80%+), Merit (70-79%), Pass (60-69%), Fail (0-59%).
-Check specifically:
-1. Command Verb Precision: Did the candidate actively '${params.commandVerb}' (e.g. critical evaluation/justification vs mere descriptive recall)?
-2. Framework Rigor: Correct application of SOSTAC, 7Ps, SFA, TOWS, 5Ms, PDCA with specific contextual numbers from the case study.
-3. Commercial & Financial Feasibility: ROMI, CAC, cash flow, risk assessment.
+  const systemPrompt = `You are a CIM Level 6 Chief Examiner. Grade candidate response against 2024 V1.1 standards (Distinction 80%+, Merit 70-79%, Pass 60-69%, Fail <60%). Check command verb compliance and framework rigor. Return concise JSON only:
+{"marksAwarded": number (0-${params.marks}), "grade": "Distinction"|"Merit"|"Pass"|"Fail", "examinerFeedback": "1-2 evaluative sentences", "commandVerbCompliance": "1 sentence assessing '${params.commandVerb}'", "strengths": ["string", "string"], "areasForImprovement": ["string", "string"]}`;
 
-You MUST reply ONLY in valid raw JSON with this exact schema:
-{
-  "marksAwarded": number (0 to ${params.marks}),
-  "grade": "Distinction" | "Merit" | "Pass" | "Fail",
-  "examinerFeedback": "Detailed paragraph explaining the rationale for the marks awarded",
-  "commandVerbCompliance": "Critique on how well the candidate fulfilled the '${params.commandVerb}' command verb expectation",
-  "strengths": ["string", "string"],
-  "areasForImprovement": ["string", "string"]
-}`;
+  const truncatedResponse = cleanResponse.split(/\s+/).slice(0, 1200).join(' ');
 
-  const userPrompt = `Case Study: ${params.caseTitle}
-Task Prompt: ${params.taskPrompt}
-Target Command Verb: ${params.commandVerb}
-Total Marks Available: ${params.marks}
-
-Candidate Response:
+  const userPrompt = `Case: ${params.caseTitle}
+Task (${params.marks} Marks, Verb: ${params.commandVerb}): ${params.taskPrompt}
+Response:
 """
-${params.userResponse}
+${truncatedResponse}
 """`;
 
   try {
@@ -134,17 +150,20 @@ ${params.userResponse}
       userPrompt,
       apiKey: key,
       model: params.model || getSavedTogetherModel() || DEFAULT_TOGETHER_MODEL,
-      temperature: 0.2
+      temperature: 0.2,
+      maxTokens: 550
     });
 
     const cleaned = rawOutput.replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
+    togetherResponseCache.set(cacheKey, parsed);
+    return parsed;
   } catch (error) {
     console.error('Together AI grading error:', error);
     return {
       marksAwarded: Math.round(params.marks * 0.65),
       grade: 'Pass',
-      examinerFeedback: `Completed review with fallback scoring due to API response: ${(error as Error).message}. Ensure your Together AI key is valid and funded.`,
+      examinerFeedback: `Completed review with fallback scoring: ${(error as Error).message}.`,
       commandVerbCompliance: `Ensure complete satisfaction of Level 6 '${params.commandVerb}' requirements.`,
       strengths: ['Addressed the main scenario prompt'],
       areasForImprovement: ['Expand on quantitative metrics and strategic frameworks']
@@ -161,28 +180,15 @@ export async function generateAdaptiveInterruptTogether(params: {
   const key = params.apiKey || getSavedTogetherApiKey();
   if (!key) return null;
 
-  const systemPrompt = `You are a CIM Level 6 Senior Examiner creating an interruptive Socratic micro-challenge.
-Create a rapid, realistic practitioner dilemma that tests active recall and diagnostic decision-making.
-Reply ONLY with valid raw JSON:
-{
-  "id": "challenge-${Date.now()}",
-  "type": "scenario-dilemma",
-  "title": "Short punchy dilemma title",
-  "context": "1-2 sentences real-world scenario with concrete metrics",
-  "prompt": "Direct question asking the candidate to choose the right strategic/commercial action",
-  "options": [
-    {"id": "A", "text": "Option A"},
-    {"id": "B", "text": "Option B"},
-    {"id": "C", "text": "Option C"},
-    {"id": "D", "text": "Option D"}
-  ],
-  "correctAnswer": "A",
-  "explanation": "Clear, concise rationale referencing the CIM Learning Outcome",
-  "loReference": "${params.learningOutcome}",
-  "timeLimitSeconds": 40
-}`;
+  const cacheKey = getCacheKey('tg-interrupt', `${params.topic}:${params.learningOutcome}`);
+  if (togetherResponseCache.has(cacheKey)) {
+    return togetherResponseCache.get(cacheKey) as InterruptChallenge;
+  }
 
-  const userPrompt = `Generate a challenge for Topic: ${params.topic}, Learning Outcome: ${params.learningOutcome}`;
+  const systemPrompt = `CIM Level 6 Examiner. Generate rapid scenario micro-challenge in JSON only:
+{"id": "ch-${Date.now()}", "type": "scenario-dilemma", "title": "Brief title", "context": "1-2 sentence scenario", "prompt": "Question", "options": [{"id":"A","text":"opt"},{"id":"B","text":"opt"},{"id":"C","text":"opt"},{"id":"D","text":"opt"}], "correctAnswer": "A", "explanation": "Brief rationale", "loReference": "${params.learningOutcome}", "timeLimitSeconds": 40}`;
+
+  const userPrompt = `Topic: ${params.topic}`;
 
   try {
     const rawOutput = await callTogetherChat({
@@ -190,11 +196,14 @@ Reply ONLY with valid raw JSON:
       userPrompt,
       apiKey: key,
       model: params.model || FAST_TOGETHER_MODEL,
-      temperature: 0.3
+      temperature: 0.3,
+      maxTokens: 300
     });
 
     const cleaned = rawOutput.replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
+    togetherResponseCache.set(cacheKey, parsed);
+    return parsed;
   } catch {
     return null;
   }
