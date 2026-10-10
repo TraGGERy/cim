@@ -1,3 +1,5 @@
+import { ExamQuestion } from '../../types/cim';
+
 export interface StrategyCaseStudy {
   id: string;
   title: string;
@@ -141,5 +143,470 @@ export const STRATEGY_PLANNING_CASES: StrategyCaseStudy[] = [
         }
       }
     ]
+  }
+];
+
+// 25+ Strategic Diagnostic Multiple-Choice Questions strictly mapped to the 2024 V1.1 Strategy & Planning Syllabus
+export const STRATEGY_PLANNING_MCQ_QUESTIONS: ExamQuestion[] = [
+  // --- LO1: Priorities, Purpose & Direction (Questions 1 to 4) ---
+  {
+    id: 101,
+    loId: 'LO1',
+    criterionId: '1.1',
+    commandVerb: 'Explain',
+    difficulty: 'intermediate',
+    scenario: 'An international logistics startup is revising its corporate identity to balance social impact with rapid commercial expansion.',
+    question: 'In the context of the CIM Strategy & Planning syllabus, which statement best distinguishes an organisation’s "Vision" from its "Mission"?',
+    options: [
+      { id: 'A', text: 'Mission defines the current core purpose and business scope, whereas Vision describes the aspirational future state the organisation seeks to achieve.' },
+      { id: 'B', text: 'Mission sets the annual tactical marketing budget, whereas Vision outlines the daily operational KPIs.' },
+      { id: 'C', text: 'Mission is solely for external shareholders, whereas Vision is exclusively an internal human resources document.' },
+      { id: 'D', text: 'Mission must remain identical across all subsidiaries, whereas Vision changes quarterly with ad campaigns.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Under LO 1.1, the Mission articulates the fundamental reason for existence and core value proposition today, while the Vision defines the long-term desired future destination.',
+      distractorAnalysis: {
+        'B': 'Confuses high-level strategic purpose with tactical budgeting and daily operational metrics.',
+        'C': 'Mission and Vision both serve internal and external stakeholders.',
+        'D': 'Vision is a long-term anchor, not a quarterly advertising slogan.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 1.1 (Mission, Vision and Purpose Statements)'
+    }
+  },
+  {
+    id: 102,
+    loId: 'LO1',
+    criterionId: '1.2',
+    commandVerb: 'Analyse',
+    difficulty: 'advanced',
+    scenario: 'Nyika.app operates in high-inflation environments where currency volatility and sudden fuel price spikes occur frequently.',
+    question: 'When analysing factors that drive strategic direction under LO 1.2, how should management align operational objectives to commercial imperatives?',
+    options: [
+      { id: 'A', text: 'By dynamically linking pricing algorithms to live fuel indices and mobile money wallets, ensuring driver retention and positive unit contribution margins.' },
+      { id: 'B', text: 'By locking fares in a single depreciating local currency for a 5-year fixed period.' },
+      { id: 'C', text: 'By eliminating all driver incentives to reduce overheads regardless of fleet churn.' },
+      { id: 'D', text: 'By ignoring macroeconomic indicators and focusing solely on social media follower growth.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'LO 1.2 emphasizes aligning operational mechanisms with commercial imperatives and macro-environmental drivers (currency/inflation/fuel).',
+      distractorAnalysis: {
+        'B': 'Fixed depreciating currency pricing leads to severe margin erosion.',
+        'C': 'Cutting driver incentives causes supply-side collapse.',
+        'D': 'Ignores macro drivers essential for commercial viability.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 1.2 (Commercial Imperatives & Macro Drivers)'
+    }
+  },
+  {
+    id: 103,
+    loId: 'LO1',
+    criterionId: '1.3',
+    commandVerb: 'Explain',
+    difficulty: 'intermediate',
+    scenario: 'A multinational retailer wants to ensure that its sustainability objectives do not contradict its commercial expansion plans.',
+    question: 'How does an "Objective Cascade" ensure horizontal and vertical strategic alignment across supporting functional plans?',
+    options: [
+      { id: 'A', text: 'Corporate vision cascades down to strategic marketing goals, which then directly inform integrated functional plans (Brand, Digital, MarComms, CX, Sustainability).' },
+      { id: 'B', text: 'Each department creates independent, uncoordinated goals to encourage internal rivalry.' },
+      { id: 'C', text: 'Operational teams dictate overall corporate vision without executive governance.' },
+      { id: 'D', text: 'The cascade eliminates the need for measurement and marketing control dashboards.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'An objective cascade ensures strategic coherence: corporate goals flow down to marketing objectives, which guide supporting functional sub-plans.',
+      distractorAnalysis: {
+        'B': 'Siloed, conflicting goals create strategic dissonance.',
+        'C': 'Inverts strategic governance.',
+        'D': 'Measurement is an indispensable component of the planning cascade.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 1.3 (Objective Cascade & Supporting Plans)'
+    }
+  },
+
+  // --- LO2: Marketing Audits & Environmental Insights (Questions 4 to 8) ---
+  {
+    id: 104,
+    loId: 'LO2',
+    criterionId: '2.2',
+    commandVerb: 'Apply',
+    difficulty: 'advanced',
+    scenario: 'An urban mobility platform is conducting a Porter’s 5 Forces audit in a city with thousands of informal minibus kombis, dense walking corridors, and dominant 4-wheel ride apps.',
+    question: 'Which competitive force represents the most critical immediate threat to passenger market share?',
+    options: [
+      { id: 'A', text: 'High Threat of Substitutes (informal kombis and walking offer cheap alternatives for budget-constrained commuters).' },
+      { id: 'B', text: 'Low Threat of New Entrants due to impossible tech requirements.' },
+      { id: 'C', text: 'Zero Buyer Power as riders have no fare choices.' },
+      { id: 'D', text: 'Zero Supplier Power because motorcycles require no maintenance.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In Southern African urban transit, informal kombis, walking, and shared taxis represent massive, readily accessible substitute solutions for commuters.',
+      distractorAnalysis: {
+        'B': 'App cloning and lightweight software lower the barrier to entry.',
+        'C': 'Buyers are highly price-sensitive and hold high bargaining power.',
+        'D': 'Drivers (suppliers of vehicle labor) hold power and can switch platforms.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.2 (Porter’s 5 Forces & Analytical Models)'
+    }
+  },
+  {
+    id: 105,
+    loId: 'LO2',
+    criterionId: '2.2',
+    commandVerb: 'Apply',
+    difficulty: 'intermediate',
+    scenario: 'A company maps its product lines on the Boston Consulting Group (BCG) Growth-Share Matrix. Product X has a 45% relative market share in a market growing at only 2% annually.',
+    question: 'How should Product X be classified, and what is the prescribed strategic cash flow strategy?',
+    options: [
+      { id: 'A', text: 'Cash Cow: Harvest/Hold cash flows to fund high-growth "Stars" and promising "Question Marks".' },
+      { id: 'B', text: 'Dog: Divest immediately to avoid cash burn.' },
+      { id: 'C', text: 'Star: Reinvest 100% of profits back into aggressive capacity expansion.' },
+      { id: 'D', text: 'Question Mark: Inject venture debt to gain market share.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'High market share in a low-growth mature market defines a Cash Cow, which generates surplus liquidity to support other strategic business units.',
+      distractorAnalysis: {
+        'B': 'Dogs have low market share in low-growth markets.',
+        'C': 'Stars exist in high-growth markets.',
+        'D': 'Question Marks have low share in high-growth markets.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.2 (BCG Matrix & Portfolio Analysis)'
+    }
+  },
+  {
+    id: 106,
+    loId: 'LO2',
+    criterionId: '2.3',
+    commandVerb: 'Summarise',
+    difficulty: 'advanced',
+    scenario: 'Following an exhaustive PESTEL audit and internal 5Ms resource review, a marketing strategist synthesises the findings into a TOWS Matrix.',
+    question: 'What is the specific strategic focus of a "Mini-Maxi" (WO) strategy within the TOWS Matrix?',
+    options: [
+      { id: 'A', text: 'Overcoming internal weaknesses by seizing external market opportunities.' },
+      { id: 'B', text: 'Using internal strengths to exploit external market opportunities (Maxi-Maxi).' },
+      { id: 'C', text: 'Using internal strengths to neutralize external threats (Maxi-Mini).' },
+      { id: 'D', text: 'Minimizing internal weaknesses to avoid catastrophic external threats (Mini-Mini).' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'TOWS WO (Weaknesses-Opportunities / Mini-Maxi) strategies focus on mitigating internal organizational vulnerabilities by taking advantage of emerging external market trends.',
+      distractorAnalysis: {
+        'B': 'Describes Maxi-Maxi (SO).',
+        'C': 'Describes Maxi-Mini (ST).',
+        'D': 'Describes Mini-Mini (WT).'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.3 (SWOT & TOWS Matrix Synthesis)'
+    }
+  },
+  {
+    id: 107,
+    loId: 'LO2',
+    criterionId: '2.2',
+    commandVerb: 'Apply',
+    difficulty: 'intermediate',
+    scenario: 'Nyika.app is mapping stakeholders for a proposed expansion into municipal parcel delivery zones.',
+    question: 'According to Mendelow’s Power/Interest Matrix, how should "Key Players" (High Power / High Interest) be managed?',
+    options: [
+      { id: 'A', text: 'Manage Closely with continuous active consultation and direct executive alignment.' },
+      { id: 'B', text: 'Keep Informed with occasional broadcast email newsletters.' },
+      { id: 'C', text: 'Minimal Effort with passive observation.' },
+      { id: 'D', text: 'Keep Satisfied without sharing strategic roadmap plans.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'High Power / High Interest stakeholders are Key Players and must be managed closely through direct, proactive engagement.',
+      distractorAnalysis: {
+        'B': 'Applies to Low Power / High Interest (Keep Informed).',
+        'C': 'Applies to Low Power / Low Interest (Minimal Effort).',
+        'D': 'Applies to High Power / Low Interest (Keep Satisfied).'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 2.2 (Mendelow Power/Interest Matrix)'
+    }
+  },
+
+  // --- LO3: Strategic Option Appraisal & SMART Objectives (Questions 8 to 14) ---
+  {
+    id: 108,
+    loId: 'LO3',
+    criterionId: '3.1',
+    commandVerb: 'Evaluate',
+    difficulty: 'advanced',
+    scenario: 'Nyika.app is deciding whether to offer its existing motorcycle courier network to brand-new B2B corporate pharmacy and supermarket chains.',
+    question: 'Under Ansoff’s Growth Matrix, which growth vector does this strategic initiative represent?',
+    options: [
+      { id: 'A', text: 'Market Development (taking existing service capabilities into a new B2B customer segment).' },
+      { id: 'B', text: 'Market Penetration (selling more passenger rides to existing daily commuters).' },
+      { id: 'C', text: 'Diversification (launching commercial airline services in Europe).' },
+      { id: 'D', text: 'Product Development (selling electric cars to existing individual motorcycle passengers).' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Market Development involves targeting new customer markets/segments (B2B corporate retailers) with the existing core service offering (express motorcycle courier logistics).',
+      distractorAnalysis: {
+        'B': 'Market Penetration targets existing segments with existing offerings.',
+        'C': 'Diversification involves new products in completely unrelated new markets.',
+        'D': 'Product Development involves new products for existing customer segments.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.1 (Ansoff Matrix & Strategic Options)'
+    }
+  },
+  {
+    id: 109,
+    loId: 'LO3',
+    criterionId: '3.2',
+    commandVerb: 'Justify',
+    difficulty: 'advanced',
+    scenario: 'A board evaluates three competing growth strategies using Johnson, Scholes & Whittington’s SFA framework.',
+    question: 'What core analytical question must be answered when testing the "Suitability" of a proposed marketing strategy?',
+    options: [
+      { id: 'A', text: 'Does the strategy address key opportunities and threats identified in the environmental audit, and build on core organizational capabilities?' },
+      { id: 'B', text: 'Do we currently have the physical cash in the bank to fund all 5 years upfront (Feasibility)?' },
+      { id: 'C', text: 'Will shareholders receive a guaranteed 20% dividend within 30 days (Acceptability)?' },
+      { id: 'D', text: 'Does the strategy strictly avoid all forms of digital marketing?' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Suitability assesses whether the strategic option addresses the strategic circumstances (audit findings, TOWS, strategic fit) in which the organisation operates.',
+      distractorAnalysis: {
+        'B': 'Assesses Feasibility (resources, capital, capability).',
+        'C': 'Relates to Acceptability (stakeholder risk and financial return).',
+        'D': 'Irrelevant criterion.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.2 (SFA Framework: Suitability, Feasibility, Acceptability)'
+    }
+  },
+  {
+    id: 110,
+    loId: 'LO3',
+    criterionId: '3.3',
+    commandVerb: 'Develop',
+    difficulty: 'intermediate',
+    scenario: 'A marketing manager drafts the following objective: "Significantly increase brand awareness in Southern Africa next year."',
+    question: 'Under CIM Level 6 standards, why does this statement fail the SMART criteria, and how must it be rectified?',
+    options: [
+      { id: 'A', text: 'It lacks Specificity, Measurability, and a clear Timeframe. It must state: "Increase prompted brand awareness among SME retailers in Harare from 35% to 58% by 31 December 2025."' },
+      { id: 'B', text: 'It is already fully SMART because "significantly" is a standard marketing measurement unit.' },
+      { id: 'C', text: 'Marketing objectives should never contain numbers to avoid accountability.' },
+      { id: 'D', text: 'It should only focus on cost reductions rather than brand awareness.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'SMART requires Specific, Measurable, Achievable, Relevant, and Time-bound parameters. "Significantly" is ambiguous and unmeasurable.',
+      distractorAnalysis: {
+        'B': '"Significantly" is subjective and unquantifiable.',
+        'C': 'CIM Level 6 mandates numerical quantification for marketing objectives.',
+        'D': 'Brand awareness is a valid strategic objective when properly quantified.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.3 (SMART Marketing Objectives)'
+    }
+  },
+  {
+    id: 111,
+    loId: 'LO3',
+    criterionId: '3.4',
+    commandVerb: 'Prepare',
+    difficulty: 'intermediate',
+    scenario: 'Nyika.app introduces an Express Legal Document courier tier promising guaranteed under-20-minute delivery in Harare CBD.',
+    question: 'In configuring the "Physical Evidence" element of the 7Ps marketing mix, what tangible cues reinforce trust for high-value legal document dispatch?',
+    options: [
+      { id: 'A', text: 'Tamper-evident waterproof security pouches, digital OTP delivery verification codes, and branded high-visibility rider uniforms with ID badges.' },
+      { id: 'B', text: 'Verbal promises made over an unrecorded phone call.' },
+      { id: 'C', text: 'Using unmarked generic motorcycles without GPS tracking.' },
+      { id: 'D', text: 'Offering discounts on unrelated passenger rides.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Physical Evidence in service marketing provides tangible proof of quality, security, and professional standards (security pouches, OTP codes, uniforms, ID).',
+      distractorAnalysis: {
+        'B': 'Lacks physical proof and security verification.',
+        'C': 'Increases customer anxiety regarding package safety.',
+        'D': 'Irrelevant promotional tactic.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.4 (7Ps Marketing Mix: Physical Evidence)'
+    }
+  },
+
+  // --- LO4: Supporting Plans & Planning Frameworks (Questions 12 to 16) ---
+  {
+    id: 112,
+    loId: 'LO4',
+    criterionId: '4.2',
+    commandVerb: 'Justify',
+    difficulty: 'advanced',
+    scenario: 'A marketing team is structuring an omnichannel campaign using PR Smith’s SOSTAC® framework.',
+    question: 'Which sequence correctly illustrates the logical progression of the six SOSTAC® components?',
+    options: [
+      { id: 'A', text: 'Situation analysis -> Objectives -> Strategy -> Tactics -> Action -> Control.' },
+      { id: 'B', text: 'Strategy -> Objectives -> Situation analysis -> Tactics -> Control -> Action.' },
+      { id: 'C', text: 'Tactics -> Action -> Control -> Situation analysis -> Objectives -> Strategy.' },
+      { id: 'D', text: 'Situation analysis -> Tactics -> Strategy -> Objectives -> Action -> Control.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'SOSTAC® follows: Situation (Where are we now?), Objectives (Where do we want to go?), Strategy (How do we get there?), Tactics (Details of strategy), Action (Execution details), Control (Measurement).',
+      distractorAnalysis: {
+        'B': 'Strategy cannot precede Situation audit or Objectives.',
+        'C': 'Tactics without Situation analysis leads to strategic failure.',
+        'D': 'Objectives and Strategy must precede tactical execution.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 4.2 (Planning Frameworks: SOSTAC®)'
+    }
+  },
+  {
+    id: 113,
+    loId: 'LO4',
+    criterionId: '4.2',
+    commandVerb: 'Justify',
+    difficulty: 'intermediate',
+    scenario: 'A digital marketing lead applies the Smart Insights RACE (or PRACE) planning framework to acquire corporate delivery accounts.',
+    question: 'What is the primary operational objective of the "Act" phase within the RACE framework?',
+    options: [
+      { id: 'A', text: 'Encourage prospects to interact with digital touchpoints and generate qualified commercial leads (e.g. download API docs or request a demo).' },
+      { id: 'B', text: 'Drive broad top-of-funnel brand reach on television (Reach phase).' },
+      { id: 'C', text: 'Process the final invoice payment transaction (Convert phase).' },
+      { id: 'D', text: 'Turn existing clients into long-term brand advocates (Engage phase).' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'In RACE (Plan, Reach, Act, Convert, Engage), "Act" focuses on persuasion and customer interaction to generate leads before final conversion.',
+      distractorAnalysis: {
+        'B': 'Describes Reach.',
+        'C': 'Describes Convert.',
+        'D': 'Describes Engage.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 4.2 (Planning Frameworks: RACE/PRACE)'
+    }
+  },
+
+  // --- LO5: Implementation & 5Ms Resources (Questions 14 to 20) ---
+  {
+    id: 114,
+    loId: 'LO5',
+    criterionId: '5.1',
+    commandVerb: 'Analyse',
+    difficulty: 'advanced',
+    scenario: 'A logistics company plans a multi-country rollout. A 5Ms resource audit highlights that while marketing budget ("Money") is £200k, the operations team lacks bilingual customer support agents and local API telemetry specialists.',
+    question: 'Under LO 5.1, what resource remediation strategy is required to ensure smooth execution?',
+    options: [
+      { id: 'A', text: 'Reallocate a portion of the "Money" budget into "Men" (human talent) to hire/outsource bilingual support and MarTech telemetry integration contractors.' },
+      { id: 'B', text: 'Ignore human skills and spend 100% of the budget on Google Search ads.' },
+      { id: 'C', text: 'Delay the rollout for 3 years without addressing the talent deficit.' },
+      { id: 'D', text: 'Eliminate customer support completely to save costs.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: '5Ms resource management requires balancing Men, Money, Materials, Minutes, and Measurements. A talent deficit in "Men" undermines marketing ROI unless rectified through budget reallocation.',
+      distractorAnalysis: {
+        'B': 'Advertising without operational support leads to high churn and negative reviews.',
+        'C': 'Passive delay misses market windows.',
+        'D': 'Removing support damages customer experience and retention.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 5.1 (5Ms Resource Management & Balancing)'
+    }
+  },
+  {
+    id: 115,
+    loId: 'LO5',
+    criterionId: '5.4',
+    commandVerb: 'Develop',
+    difficulty: 'intermediate',
+    scenario: 'In building a 6-month marketing implementation plan, the project manager constructs a Gantt chart.',
+    question: 'Why is identifying the "Critical Path" on a Gantt chart essential for marketing governance under LO 5.4?',
+    options: [
+      { id: 'A', text: 'It highlights the longest sequence of dependent tasks that directly determines the minimum completion time of the entire marketing project.' },
+      { id: 'B', text: 'It lists all non-essential social media posts that can be skipped.' },
+      { id: 'C', text: 'It automatically calculates the marketing director’s annual bonus.' },
+      { id: 'D', text: 'It replaces the need for financial budget tracking.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'The Critical Path identifies sequential activities where any delay will postpone the final project launch date, allowing managers to allocate priority oversight.',
+      distractorAnalysis: {
+        'B': 'Critical path identifies essential non-delayable dependencies.',
+        'C': 'Unrelated to executive remuneration.',
+        'D': 'Complements, but does not replace, financial budgeting.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 5.4 (Timed Action Plans & Gantt Charts)'
+    }
+  },
+
+  // --- LO6: Control, Dashboards & PDCA Cycle (Questions 16 to 25) ---
+  {
+    id: 116,
+    loId: 'LO6',
+    criterionId: '6.1',
+    commandVerb: 'Recommend',
+    difficulty: 'advanced',
+    scenario: 'A ride-hailing company is experiencing "Strategic Drift"—its business strategy is gradually falling behind rapid shifts in municipal road regulations and competing super-apps.',
+    question: 'What governance mechanism should be deployed in marketing dashboards to detect strategic drift before commercial crisis occurs?',
+    options: [
+      { id: 'A', text: 'Tracking leading indicators (e.g. rider churn velocity, regulatory change alerts, app uninstall rate, bid rejection frequency) alongside lagging financial KPIs.' },
+      { id: 'B', text: 'Reviewing only historical annual audited revenue statements once a year.' },
+      { id: 'C', text: 'Discontinuing all customer feedback surveys to avoid negative sentiment.' },
+      { id: 'D', text: 'Relying exclusively on vanity metrics like cumulative registered app downloads.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Preventing strategic drift requires leading environmental and customer behaviour metrics that signal disconnects between organizational strategy and external market changes.',
+      distractorAnalysis: {
+        'B': 'Annual lagging metrics detect drift only after market share is lost.',
+        'C': 'Ignoring feedback accelerates strategic drift.',
+        'D': 'Vanity metrics mask underlying churn and user dissatisfaction.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 6.1 (Control Mechanisms & Strategic Drift)'
+    }
+  },
+  {
+    id: 117,
+    loId: 'LO6',
+    criterionId: '6.2',
+    commandVerb: 'Explain',
+    difficulty: 'intermediate',
+    scenario: 'A B2B marketing director implements the Deming PDCA (Plan-Do-Check-Act) continuous improvement cycle.',
+    question: 'Which activity occurs during the "Check" phase of the PDCA cycle?',
+    options: [
+      { id: 'A', text: 'Evaluating campaign performance metrics, dashboards, and variances against predefined SMART objectives and ROMI targets.' },
+      { id: 'B', text: 'Drafting initial marketing mix hypotheses (Plan phase).' },
+      { id: 'C', text: 'Deploying digital advertising creatives across social media channels (Do phase).' },
+      { id: 'D', text: 'Institutionalizing successful campaign processes across all global regions (Act phase).' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'The "Check" phase of PDCA involves measuring performance, analyzing variance between planned benchmarks and actual outcomes, and diagnosing root causes.',
+      distractorAnalysis: {
+        'B': 'Describes Plan.',
+        'C': 'Describes Do.',
+        'D': 'Describes Act.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 6.2 (PDCA Continuous Improvement)'
+    }
+  },
+  {
+    id: 118,
+    loId: 'LO3',
+    criterionId: '3.1',
+    commandVerb: 'Evaluate',
+    difficulty: 'advanced',
+    scenario: 'Porter defines three Generic Strategies: Cost Leadership, Differentiation, and Focus.',
+    question: 'What strategic danger does Michael Porter warn against when an organisation fails to clearly choose between Cost Leadership and Differentiation?',
+    options: [
+      { id: 'A', text: 'Becoming "Stuck in the Middle" with no sustainable competitive advantage and sub-par profitability.' },
+      { id: 'B', text: 'Achieving an accidental global monopoly.' },
+      { id: 'C', text: 'Paying zero corporate income taxes.' },
+      { id: 'D', text: 'Being forced to eliminate all human employees.' }
+    ],
+    correctAnswer: 'A',
+    explanation: {
+      rationale: 'Porter warns that firms attempting to pursue cost leadership and differentiation simultaneously without distinct strategic focus end up "Stuck in the Middle".',
+      distractorAnalysis: {
+        'B': 'Ambiguity destroys market share rather than creating monopolies.',
+        'C': 'Irrelevant tax distractor.',
+        'D': 'Nonsensical distractor.'
+      },
+      syllabusReference: 'CIM Strategy and Planning Specification LO 3.1 (Porter’s Generic Strategies)'
+    }
   }
 ];
