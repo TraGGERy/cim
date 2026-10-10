@@ -10,8 +10,21 @@ import {
   Cpu
 } from 'lucide-react';
 import { STRATEGY_PLANNING_CASES } from '../../../lib/examData/strategyPlanning';
+import { gradeStrategyResponseDeepSeek, DEEPSEEK_MODELS, DEFAULT_DEEPSEEK_MODEL } from '../../../lib/deepseek';
 import { gradeStrategyResponseTogether, TOGETHER_MODELS, DEFAULT_TOGETHER_MODEL } from '../../../lib/together';
-import { getSavedTogetherApiKey, saveTogetherApiKey, getSavedTogetherModel, saveTogetherModel } from '../../../lib/storage';
+import {
+  getSavedAiProvider,
+  saveAiProvider,
+  getSavedDeepSeekApiKey,
+  saveDeepSeekApiKey,
+  getSavedDeepSeekModel,
+  saveDeepSeekModel,
+  getSavedTogetherApiKey,
+  saveTogetherApiKey,
+  getSavedTogetherModel,
+  saveTogetherModel,
+  AiProvider
+} from '../../../lib/storage';
 import ExamTimer from '../../../components/exam/ExamTimer';
 
 interface StrategyGradingResult {
@@ -35,27 +48,39 @@ export default function StrategyPlanningExamPage() {
   const [isGrading, setIsGrading] = useState(false);
   const [gradingResults, setGradingResults] = useState<Record<string, StrategyGradingResult>>({});
   const [activeTab, setActiveTab] = useState<'editor' | 'rubric' | 'results'>('editor');
+
+  // AI State
+  const [provider, setProvider] = useState<AiProvider>('deepseek');
+  const [deepseekKey, setDeepseekKey] = useState('');
+  const [deepseekModel, setDeepseekModel] = useState(DEFAULT_DEEPSEEK_MODEL);
   const [togetherKey, setTogetherKey] = useState('');
-  const [selectedModel, setSelectedModel] = useState(DEFAULT_TOGETHER_MODEL);
+  const [togetherModel, setTogetherModel] = useState(DEFAULT_TOGETHER_MODEL);
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [isKeyConfigured, setIsKeyConfigured] = useState(false);
 
   useEffect(() => {
-    const key = getSavedTogetherApiKey();
-    const model = getSavedTogetherModel();
-    if (key) {
-      setTogetherKey(key);
-      setIsKeyConfigured(true);
-    }
-    if (model) {
-      setSelectedModel(model);
-    }
+    const savedProvider = getSavedAiProvider();
+    const dsKey = getSavedDeepSeekApiKey();
+    const dsModel = getSavedDeepSeekModel();
+    const tgKey = getSavedTogetherApiKey();
+    const tgModel = getSavedTogetherModel();
+
+    setProvider(savedProvider);
+    if (dsKey) setDeepseekKey(dsKey);
+    if (dsModel) setDeepseekModel(dsModel);
+    if (tgKey) setTogetherKey(tgKey);
+    if (tgModel) setTogetherModel(tgModel);
+
+    setIsKeyConfigured(savedProvider === 'deepseek' ? !!dsKey : !!tgKey);
   }, []);
 
-  const handleSaveTogetherSettings = () => {
+  const handleSaveSettings = () => {
+    saveAiProvider(provider);
+    saveDeepSeekApiKey(deepseekKey);
+    saveDeepSeekModel(deepseekModel);
     saveTogetherApiKey(togetherKey);
-    saveTogetherModel(selectedModel);
-    setIsKeyConfigured(!!togetherKey.trim());
+    saveTogetherModel(togetherModel);
+    setIsKeyConfigured(provider === 'deepseek' ? !!deepseekKey.trim() : !!togetherKey.trim());
     setShowKeyModal(false);
   };
 
@@ -71,15 +96,29 @@ export default function StrategyPlanningExamPage() {
 
     setIsGrading(true);
     try {
-      const result = await gradeStrategyResponseTogether({
-        caseTitle: caseStudy.title,
-        taskPrompt: currentTask.taskPrompt,
-        commandVerb: currentTask.commandVerb,
-        userResponse: text,
-        marks: currentTask.marks,
-        apiKey: togetherKey,
-        model: selectedModel
-      });
+      let result: StrategyGradingResult;
+
+      if (provider === 'deepseek') {
+        result = await gradeStrategyResponseDeepSeek({
+          caseTitle: caseStudy.title,
+          taskPrompt: currentTask.taskPrompt,
+          commandVerb: currentTask.commandVerb,
+          userResponse: text,
+          marks: currentTask.marks,
+          apiKey: deepseekKey,
+          model: deepseekModel
+        });
+      } else {
+        result = await gradeStrategyResponseTogether({
+          caseTitle: caseStudy.title,
+          taskPrompt: currentTask.taskPrompt,
+          commandVerb: currentTask.commandVerb,
+          userResponse: text,
+          marks: currentTask.marks,
+          apiKey: togetherKey,
+          model: togetherModel
+        });
+      }
 
       setGradingResults((prev) => ({
         ...prev,
@@ -87,11 +126,18 @@ export default function StrategyPlanningExamPage() {
       }));
       setActiveTab('results');
     } catch (err) {
-      console.error('Together AI grading error:', err);
+      console.error('AI examiner grading error:', err);
     } finally {
       setIsGrading(false);
     }
   };
+
+  const activeModelDisplay =
+    provider === 'deepseek'
+      ? deepseekModel === 'deepseek-reasoner'
+        ? 'DeepSeek-R1'
+        : 'DeepSeek-V3'
+      : togetherModel.split('/')[1] || togetherModel;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
@@ -124,14 +170,14 @@ export default function StrategyPlanningExamPage() {
             onClick={() => setShowKeyModal(true)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
               isKeyConfigured
-                ? 'bg-emerald-950/40 text-emerald-300 border-emerald-800'
+                ? 'bg-blue-950/40 text-blue-300 border-blue-800'
                 : 'bg-slate-800 text-slate-300 hover:text-white border-slate-700'
             }`}
           >
-            <Cpu className="w-3.5 h-3.5 text-purple-400" />
-            <span className="hidden sm:inline">Together AI:</span>
-            <span className="font-mono text-[11px] text-purple-300">
-              {selectedModel.split('/')[1] || selectedModel}
+            <Cpu className="w-3.5 h-3.5 text-blue-400" />
+            <span className="hidden sm:inline">AI Examiner:</span>
+            <span className="font-mono text-[11px] text-blue-300 font-bold">
+              {activeModelDisplay}
             </span>
           </button>
 
@@ -261,7 +307,7 @@ export default function StrategyPlanningExamPage() {
                     activeTab === 'results' ? 'bg-purple-600 text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  AI Chief Examiner Grade ({currentResult.marksAwarded}/{currentTask.marks})
+                  Chief Examiner Grade ({currentResult.marksAwarded}/{currentTask.marks})
                 </button>
               )}
             </div>
@@ -301,12 +347,12 @@ export default function StrategyPlanningExamPage() {
                     {isGrading ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Together AI Examiner Grading...</span>
+                        <span>AI Examiner Grading ({activeModelDisplay})...</span>
                       </>
                     ) : (
                       <>
                         <Sparkles className="w-4 h-4 text-amber-300" />
-                        <span>Submit for Together AI Examiner Review</span>
+                        <span>Submit for Chief Examiner Review ({activeModelDisplay})</span>
                       </>
                     )}
                   </button>
@@ -404,68 +450,137 @@ export default function StrategyPlanningExamPage() {
         </div>
       </main>
 
-      {/* Together AI Settings Modal */}
+      {/* AI Model Settings Modal */}
       {showKeyModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg p-6 shadow-2xl space-y-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-purple-600/20 text-purple-400 border border-purple-500/30">
+              <div className="p-2.5 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30">
                 <Cpu className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Together AI Model Configuration</h3>
-                <p className="text-xs text-slate-400">Fast, low-cost AI examiner & Socratic tutoring</p>
+                <h3 className="text-base font-bold text-white">AI Examiner Configuration</h3>
+                <p className="text-xs text-slate-400">DeepSeek (V3 / R1) & Together AI multi-model engine</p>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Together AI API Key</label>
-                <input
-                  type="password"
-                  placeholder="together_api_key_..."
-                  value={togetherKey}
-                  onChange={(e) => setTogetherKey(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-purple-500"
-                />
-              </div>
+            {/* Provider Switch Tabs */}
+            <div className="flex p-1 bg-slate-950 rounded-2xl border border-slate-800">
+              <button
+                type="button"
+                onClick={() => setProvider('deepseek')}
+                className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+                  provider === 'deepseek'
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                DeepSeek (Recommended)
+              </button>
+              <button
+                type="button"
+                onClick={() => setProvider('together')}
+                className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+                  provider === 'together'
+                    ? 'bg-purple-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Together AI
+              </button>
+            </div>
 
-              <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Select Model (Cheap & Capable)</label>
-                <div className="space-y-2">
-                  {TOGETHER_MODELS.map((m) => (
-                    <div
-                      key={m.id}
-                      onClick={() => setSelectedModel(m.id)}
-                      className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
-                        selectedModel === m.id
-                          ? 'bg-purple-950/60 border-purple-500 text-white'
-                          : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between font-semibold">
-                        <span>{m.name}</span>
-                        {selectedModel === m.id && <span className="text-purple-400 text-[10px]">Active</span>}
+            {provider === 'deepseek' ? (
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">DeepSeek API Key</label>
+                  <input
+                    type="password"
+                    placeholder="sk-..."
+                    value={deepseekKey}
+                    onChange={(e) => setDeepseekKey(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-blue-500"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Default key pre-configured. Ultra-low latency and deep reasoning.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Select DeepSeek Model</label>
+                  <div className="space-y-2">
+                    {DEEPSEEK_MODELS.map((m) => (
+                      <div
+                        key={m.id}
+                        onClick={() => setDeepseekModel(m.id)}
+                        className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                          deepseekModel === m.id
+                            ? 'bg-blue-950/60 border-blue-500 text-white'
+                            : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-semibold">
+                          <span>{m.name}</span>
+                          {deepseekModel === m.id && <span className="text-blue-400 text-[10px]">Active</span>}
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5">{m.description}</p>
                       </div>
-                      <p className="text-[11px] text-slate-400 mt-0.5">{m.description}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Together AI API Key</label>
+                  <input
+                    type="password"
+                    placeholder="together_api_key_..."
+                    value={togetherKey}
+                    onChange={(e) => setTogetherKey(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Select Together Model</label>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {TOGETHER_MODELS.map((m) => (
+                      <div
+                        key={m.id}
+                        onClick={() => setTogetherModel(m.id)}
+                        className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                          togetherModel === m.id
+                            ? 'bg-purple-950/60 border-purple-500 text-white'
+                            : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-semibold">
+                          <span>{m.name}</span>
+                          {togetherModel === m.id && <span className="text-purple-400 text-[10px]">Active</span>}
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5">{m.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="flex justify-end gap-2 pt-2">
               <button
+                type="button"
                 onClick={() => setShowKeyModal(false)}
                 className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white"
               >
                 Cancel
               </button>
               <button
-                onClick={handleSaveTogetherSettings}
-                className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-500/20"
+                type="button"
+                onClick={handleSaveSettings}
+                className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20"
               >
-                Save Settings
+                Save AI Settings
               </button>
             </div>
           </div>

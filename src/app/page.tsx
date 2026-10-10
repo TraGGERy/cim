@@ -17,24 +17,35 @@ import {
   FileText
 } from 'lucide-react';
 import {
+  getSavedAiProvider,
+  saveAiProvider,
+  getSavedDeepSeekApiKey,
+  saveDeepSeekApiKey,
+  getSavedDeepSeekModel,
+  saveDeepSeekModel,
   getSavedTogetherApiKey,
   saveTogetherApiKey,
   getSavedTogetherModel,
   saveTogetherModel,
   getInterruptStats,
   getExamAttempts,
-  InterruptStats
+  InterruptStats,
+  AiProvider
 } from '../lib/storage';
 import { UserExamAttempt } from '../types/cim';
 import FormulaCalculator from '../components/exam/FormulaCalculator';
 import InterruptionModal from '../components/interrupt/InterruptionModal';
 import { InterruptChallenge } from '../types/cim';
 import AttributionCanvas from '../components/3d/AttributionCanvas';
+import { DEEPSEEK_MODELS, DEFAULT_DEEPSEEK_MODEL } from '../lib/deepseek';
 import { TOGETHER_MODELS, DEFAULT_TOGETHER_MODEL } from '../lib/together';
 
 export default function HomePage() {
+  const [provider, setProvider] = useState<AiProvider>('deepseek');
+  const [deepseekKey, setDeepseekKey] = useState('');
+  const [deepseekModel, setDeepseekModel] = useState(DEFAULT_DEEPSEEK_MODEL);
   const [togetherKey, setTogetherKey] = useState('');
-  const [selectedModel, setSelectedModel] = useState(DEFAULT_TOGETHER_MODEL);
+  const [togetherModel, setTogetherModel] = useState(DEFAULT_TOGETHER_MODEL);
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [isKeySaved, setIsKeySaved] = useState(false);
   const [showCalculator, setShowCalculator] = useState(false);
@@ -52,23 +63,30 @@ export default function HomePage() {
   const [showInterruptModal, setShowInterruptModal] = useState(false);
 
   useEffect(() => {
-    const savedKey = getSavedTogetherApiKey();
-    const savedModel = getSavedTogetherModel();
-    if (savedKey) {
-      setTogetherKey(savedKey);
-      setIsKeySaved(true);
-    }
-    if (savedModel) {
-      setSelectedModel(savedModel);
-    }
+    const savedProvider = getSavedAiProvider();
+    const dsKey = getSavedDeepSeekApiKey();
+    const dsModel = getSavedDeepSeekModel();
+    const tgKey = getSavedTogetherApiKey();
+    const tgModel = getSavedTogetherModel();
+
+    setProvider(savedProvider);
+    if (dsKey) setDeepseekKey(dsKey);
+    if (dsModel) setDeepseekModel(dsModel);
+    if (tgKey) setTogetherKey(tgKey);
+    if (tgModel) setTogetherModel(tgModel);
+
+    setIsKeySaved(savedProvider === 'deepseek' ? !!dsKey : !!tgKey);
     setInterruptStats(getInterruptStats());
     setRecentAttempts(getExamAttempts());
   }, []);
 
-  const handleSaveTogetherSettings = () => {
+  const handleSaveSettings = () => {
+    saveAiProvider(provider);
+    saveDeepSeekApiKey(deepseekKey);
+    saveDeepSeekModel(deepseekModel);
     saveTogetherApiKey(togetherKey);
-    saveTogetherModel(selectedModel);
-    setIsKeySaved(!!togetherKey.trim());
+    saveTogetherModel(togetherModel);
+    setIsKeySaved(provider === 'deepseek' ? !!deepseekKey.trim() : !!togetherKey.trim());
     setShowKeyModal(false);
   };
 
@@ -93,6 +111,13 @@ export default function HomePage() {
     setActiveChallenge(sampleChallenge);
     setShowInterruptModal(true);
   };
+
+  const activeModelDisplay =
+    provider === 'deepseek'
+      ? deepseekModel === 'deepseek-reasoner'
+        ? 'DeepSeek-R1'
+        : 'DeepSeek-V3'
+      : togetherModel.split('/')[1] || togetherModel;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
@@ -135,14 +160,14 @@ export default function HomePage() {
               onClick={() => setShowKeyModal(true)}
               className={`p-2 rounded-xl border text-xs flex items-center gap-1.5 transition-all ${
                 isKeySaved
-                  ? 'bg-purple-950/40 border-purple-800 text-purple-300'
+                  ? 'bg-blue-950/40 border-blue-800 text-blue-300'
                   : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
               }`}
-              title="Configure Together AI"
+              title="Configure AI Models (DeepSeek / Together AI)"
             >
-              <Cpu className="w-4 h-4 text-purple-400" />
-              <span className="hidden md:inline text-[11px] font-mono">
-                {isKeySaved ? `Together AI (${selectedModel.split('/')[1] || 'Connected'})` : 'Together AI'}
+              <Cpu className="w-4 h-4 text-blue-400" />
+              <span className="hidden md:inline text-[11px] font-mono font-bold">
+                {isKeySaved ? `${activeModelDisplay}` : 'AI Config'}
               </span>
             </button>
           </div>
@@ -157,7 +182,7 @@ export default function HomePage() {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold border border-blue-500/20">
               <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              Grounded in Official 2024 V1.1 Standards • Powered by Together AI
+              Official 2024 V1.1 Standards • Powered by DeepSeek-V3 / DeepSeek-R1 & Together AI
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
@@ -165,7 +190,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
-              An exam-accurate simulation platform built specifically for the <strong>Commercial Intelligence</strong> (45-Question 90-Min Onscreen Test) and <strong>Strategy & Planning</strong> qualifications featuring the <strong>Nyika.app</strong> mobility case study, evaluated with low-cost high-capability Together AI models.
+              An exam-accurate simulation platform built specifically for the <strong>Commercial Intelligence</strong> (45-Question 90-Min Onscreen Test) and <strong>Strategy & Planning</strong> qualifications featuring the <strong>Nyika.app</strong> mobility case study, evaluated with deep-reasoning DeepSeek and Together AI models.
             </p>
 
             {/* Quick Action Buttons */}
@@ -322,7 +347,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-white">CIM Level 6 Award in Strategy and Planning</h3>
 
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  <strong>Featured Case Study: Nyika.app</strong> — Scaling motorcycle fare bidding and B2B express parcel delivery across Zimbabwe, South Africa, Zambia, and Mozambique using SOSTAC®, 7Ps, and Together AI grading.
+                  <strong>Featured Case Study: Nyika.app</strong> — Scaling motorcycle fare bidding and B2B express parcel delivery across Zimbabwe, South Africa, Zambia, and Mozambique using SOSTAC®, 7Ps, and DeepSeek / Together AI examiner grading.
                 </p>
 
                 <div className="space-y-1.5 pt-2 text-xs text-slate-400">
@@ -343,7 +368,7 @@ export default function HomePage() {
 
               <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
                 <div className="text-[11px] text-slate-400">
-                  Graded by: <strong className="text-purple-300">Together AI Examiner (Llama 3.3)</strong>
+                  Graded by: <strong className="text-blue-400">DeepSeek Examiner ({activeModelDisplay})</strong>
                 </div>
                 <Link
                   href="/exam/strategy-planning"
@@ -448,79 +473,137 @@ export default function HomePage() {
         />
       )}
 
-      {/* Together AI Settings Modal */}
+      {/* AI Settings Modal */}
       {showKeyModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg p-6 shadow-2xl space-y-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-purple-600/20 text-purple-400 border border-purple-500/30">
+              <div className="p-2.5 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30">
                 <Cpu className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Together AI Model Configuration</h3>
-                <p className="text-xs text-slate-400">Low-cost, high-capability AI examiner & Socratic tutoring</p>
+                <h3 className="text-base font-bold text-white">AI Examiner & Socratic Config</h3>
+                <p className="text-xs text-slate-400">DeepSeek (V3 / R1) & Together AI multi-model engine</p>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Together AI API Key</label>
-                <input
-                  type="password"
-                  placeholder="together_api_key_..."
-                  value={togetherKey}
-                  onChange={(e) => setTogetherKey(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-purple-500"
-                />
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Get your key from{' '}
-                  <a
-                    href="https://api.together.xyz/settings/api-keys"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-purple-400 hover:underline"
-                  >
-                    Together AI
-                  </a>
-                </p>
-              </div>
+            {/* Provider Switch Tabs */}
+            <div className="flex p-1 bg-slate-950 rounded-2xl border border-slate-800">
+              <button
+                type="button"
+                onClick={() => setProvider('deepseek')}
+                className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+                  provider === 'deepseek'
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                DeepSeek (Recommended)
+              </button>
+              <button
+                type="button"
+                onClick={() => setProvider('together')}
+                className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+                  provider === 'together'
+                    ? 'bg-purple-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Together AI
+              </button>
+            </div>
 
-              <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Select Model (Cheap & Capable)</label>
-                <div className="space-y-2">
-                  {TOGETHER_MODELS.map((m) => (
-                    <div
-                      key={m.id}
-                      onClick={() => setSelectedModel(m.id)}
-                      className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
-                        selectedModel === m.id
-                          ? 'bg-purple-950/60 border-purple-500 text-white'
-                          : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between font-semibold">
-                        <span>{m.name}</span>
-                        {selectedModel === m.id && <span className="text-purple-400 text-[10px]">Active</span>}
+            {provider === 'deepseek' ? (
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">DeepSeek API Key</label>
+                  <input
+                    type="password"
+                    placeholder="sk-..."
+                    value={deepseekKey}
+                    onChange={(e) => setDeepseekKey(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-blue-500"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Configured for high-speed evaluation & Socratic recall.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Select DeepSeek Model</label>
+                  <div className="space-y-2">
+                    {DEEPSEEK_MODELS.map((m) => (
+                      <div
+                        key={m.id}
+                        onClick={() => setDeepseekModel(m.id)}
+                        className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                          deepseekModel === m.id
+                            ? 'bg-blue-950/60 border-blue-500 text-white'
+                            : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-semibold">
+                          <span>{m.name}</span>
+                          {deepseekModel === m.id && <span className="text-blue-400 text-[10px]">Active</span>}
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5">{m.description}</p>
                       </div>
-                      <p className="text-[11px] text-slate-400 mt-0.5">{m.description}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Together AI API Key</label>
+                  <input
+                    type="password"
+                    placeholder="together_api_key_..."
+                    value={togetherKey}
+                    onChange={(e) => setTogetherKey(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-medium text-slate-300 block mb-1">Select Together Model</label>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {TOGETHER_MODELS.map((m) => (
+                      <div
+                        key={m.id}
+                        onClick={() => setTogetherModel(m.id)}
+                        className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                          togetherModel === m.id
+                            ? 'bg-purple-950/60 border-purple-500 text-white'
+                            : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-semibold">
+                          <span>{m.name}</span>
+                          {togetherModel === m.id && <span className="text-purple-400 text-[10px]">Active</span>}
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5">{m.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="flex justify-end gap-2 pt-2">
               <button
+                type="button"
                 onClick={() => setShowKeyModal(false)}
                 className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white"
               >
                 Cancel
               </button>
               <button
-                onClick={handleSaveTogetherSettings}
-                className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-500/20"
+                type="button"
+                onClick={handleSaveSettings}
+                className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20"
               >
-                Save Settings
+                Save AI Settings
               </button>
             </div>
           </div>

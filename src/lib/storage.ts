@@ -2,9 +2,14 @@ import { UserExamAttempt, LearningRecord } from '../types/cim';
 
 const EXAM_ATTEMPTS_KEY = 'cim_exam_attempts_v2';
 const LEARNING_RECORDS_KEY = 'cim_learning_records_v2';
+const DEEPSEEK_API_KEY_STORAGE = 'cim_deepseek_api_key';
+const DEEPSEEK_MODEL_STORAGE = 'cim_deepseek_model';
 const TOGETHER_API_KEY_STORAGE = 'cim_together_api_key';
 const TOGETHER_MODEL_STORAGE = 'cim_together_model';
+const AI_PROVIDER_STORAGE = 'cim_ai_provider';
 const INTERRUPT_STATS_KEY = 'cim_interrupt_stats_v2';
+
+export type AiProvider = 'deepseek' | 'together';
 
 export interface InterruptStats {
   totalFired: number;
@@ -12,6 +17,42 @@ export interface InterruptStats {
   totalCorrect: number;
   streak: number;
   lastInterceptTime: number;
+}
+
+export function getSavedAiProvider(): AiProvider {
+  if (typeof window === 'undefined') return 'deepseek';
+  return (localStorage.getItem(AI_PROVIDER_STORAGE) as AiProvider) || 'deepseek';
+}
+
+export function saveAiProvider(provider: AiProvider): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(AI_PROVIDER_STORAGE, provider);
+}
+
+export function getSavedDeepSeekApiKey(): string {
+  if (typeof window === 'undefined') {
+    return process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY || 'sk-b8cb4ad672644257b53a5fe212a3f058';
+  }
+  return (
+    localStorage.getItem(DEEPSEEK_API_KEY_STORAGE) ||
+    process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY ||
+    'sk-b8cb4ad672644257b53a5fe212a3f058'
+  );
+}
+
+export function saveDeepSeekApiKey(key: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(DEEPSEEK_API_KEY_STORAGE, key.trim());
+}
+
+export function getSavedDeepSeekModel(): string {
+  if (typeof window === 'undefined') return 'deepseek-chat';
+  return localStorage.getItem(DEEPSEEK_MODEL_STORAGE) || 'deepseek-chat';
+}
+
+export function saveDeepSeekModel(model: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(DEEPSEEK_MODEL_STORAGE, model.trim());
 }
 
 export function getSavedTogetherApiKey(): string {
@@ -45,11 +86,11 @@ export function saveTogetherModel(model: string): void {
 
 // Retain legacy helpers for compatibility
 export function getSavedApiKey(): string {
-  return getSavedTogetherApiKey();
+  return getSavedDeepSeekApiKey() || getSavedTogetherApiKey();
 }
 
 export function saveApiKey(key: string): void {
-  saveTogetherApiKey(key);
+  saveDeepSeekApiKey(key);
 }
 
 export function getExamAttempts(): UserExamAttempt[] {

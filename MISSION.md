@@ -32,7 +32,8 @@ Achieve Distinction (80%+) in the **CIM Level 6 Award in Commercial Intelligence
 ---
 
 ## AI Examiner Engine
-- Powered by **Together AI** using cheap but highly capable models:
-  - `meta-llama/Llama-3.3-70B-Instruct-Turbo` (Chief Examiner deep grading & Level 6 command verb compliance)
-  - `meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo` (Rapid Socratic dilemma intercepts)
-  - `Qwen/Qwen2.5-72B-Instruct-Turbo` (Quantitative & analytical evaluations)
+- Powered by **DeepSeek API** (Default) & **Together AI**:
+  - `deepseek-chat` (DeepSeek-V3: high-speed Chief Examiner marking & active-recall dilemma generation)
+  - `deepseek-reasoner` (DeepSeek-R1: deep chain-of-thought analysis & mathematical derivations)
+  - `meta-llama/Llama-3.3-70B-Instruct-Turbo` (Together AI alternative)
+  - `meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo` (Fast lightweight dilemma intercepts)
