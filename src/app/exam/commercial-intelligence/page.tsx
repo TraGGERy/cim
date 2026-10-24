@@ -18,6 +18,8 @@ import QuestionNavigator from '../../../components/exam/QuestionNavigator';
 import FormulaCalculator from '../../../components/exam/FormulaCalculator';
 import ScoreReportModal from '../../../components/exam/ScoreReportModal';
 import { saveExamAttempt } from '../../../lib/storage';
+import TashaAvatar from '../../../components/avatars/TashaAvatar';
+import ShumbaAvatar from '../../../components/avatars/ShumbaAvatar';
 
 export default function CommercialIntelligenceExamPage() {
   const [questions, setQuestions] = useState<ExamQuestion[]>([]);
@@ -189,8 +191,28 @@ export default function CommercialIntelligenceExamPage() {
               Submit Exam
             </button>
           )}
+
+          {/* Candidate Profile Chip */}
+          <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-800">
+            <TashaAvatar size="xs" showOnline={false} />
+            <span className="text-xs font-bold text-white">Tasha Aka</span>
+          </div>
         </div>
       </header>
+
+      {/* Tutor Shumba Examiner Guidance Pill */}
+      {!isExamCompleted && (
+        <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 border-b border-amber-500/20 px-4 sm:px-6 py-2 flex items-center justify-between text-xs text-slate-300">
+          <div className="flex items-center gap-2">
+            <ShumbaAvatar size="xs" showBadge={false} showMentorShield={false} />
+            <span className="text-amber-300 font-bold">Tutor Shumba's Rule for Tasha:</span>
+            <span className="hidden md:inline text-slate-300">
+              Pacing is 2 mins/question. State formulas with exact units; flag calculation-heavy items and bank conceptual marks first!
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-emerald-400 font-semibold">Candidate: Tasha Aka • Goal: 80% Distinction</span>
+        </div>
+      )}
 
       {/* Main Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">

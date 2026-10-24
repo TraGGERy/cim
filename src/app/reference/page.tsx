@@ -6,6 +6,8 @@ import { Calculator, Home } from 'lucide-react';
 import { CIM_FORMULAS } from '../../lib/formulas';
 import { CIM_COMMAND_VERBS } from '../../lib/modulesData';
 import FormulaCalculator from '../../components/exam/FormulaCalculator';
+import TashaAvatar from '../../components/avatars/TashaAvatar';
+import ShumbaAvatar from '../../components/avatars/ShumbaAvatar';
 
 export default function ReferenceHubPage() {
   const [showCalculator, setShowCalculator] = useState(false);
@@ -34,13 +36,20 @@ export default function ReferenceHubPage() {
           </div>
         </div>
 
-        <button
-          onClick={() => setShowCalculator(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20"
-        >
-          <Calculator className="w-3.5 h-3.5" />
-          <span>Launch Calculator</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowCalculator(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20"
+          >
+            <Calculator className="w-3.5 h-3.5" />
+            <span>Launch Calculator</span>
+          </button>
+
+          <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-800">
+            <TashaAvatar size="xs" showOnline={false} />
+            <span className="text-xs font-bold text-white">Tasha Aka</span>
+          </div>
+        </div>
       </header>
 
       {/* Main Content */}

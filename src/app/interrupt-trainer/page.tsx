@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { InterruptChallenge } from '../../types/cim';
 import { getInterruptStats, recordInterruptResult, InterruptStats } from '../../lib/storage';
+import TashaAvatar from '../../components/avatars/TashaAvatar';
+import ShumbaAvatar from '../../components/avatars/ShumbaAvatar';
 
 const INTERRUPT_TRAINER_BANK: InterruptChallenge[] = [
   {
@@ -242,6 +244,11 @@ export default function InterruptTrainerPage() {
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-300 font-mono text-xs font-bold">
             <Award className="w-4 h-4" />
             <span>{stats.totalCorrect} / {stats.totalAnswered} Correct</span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-800">
+            <TashaAvatar size="xs" showOnline={false} />
+            <span className="text-xs font-bold text-white">Tasha Aka</span>
           </div>
         </div>
       </header>

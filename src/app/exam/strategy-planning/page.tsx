@@ -33,6 +33,8 @@ import {
   AiProvider
 } from '../../../lib/storage';
 import ExamTimer from '../../../components/exam/ExamTimer';
+import TashaAvatar from '../../../components/avatars/TashaAvatar';
+import ShumbaAvatar from '../../../components/avatars/ShumbaAvatar';
 
 interface StrategyGradingResult {
   marksAwarded: number;
@@ -374,8 +376,26 @@ Positioning: Southern Africa's fastest, transparently priced B2B motorcycle logi
           </button>
 
           <ExamTimer durationMinutes={120} isActive={true} onTimeExpired={() => {}} />
+
+          {/* Candidate Profile Chip */}
+          <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-800">
+            <TashaAvatar size="xs" showOnline={false} />
+            <span className="text-xs font-bold text-white">Tasha Aka</span>
+          </div>
         </div>
       </header>
+
+      {/* Tutor Shumba Strategic Guidance Banner */}
+      <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 border-b border-amber-500/20 px-4 sm:px-6 py-2 flex items-center justify-between text-xs text-slate-300">
+        <div className="flex items-center gap-2">
+          <ShumbaAvatar size="xs" showBadge={false} showMentorShield={false} />
+          <span className="text-amber-300 font-bold">Tutor Shumba's Strategy Tip:</span>
+          <span className="hidden md:inline text-slate-300">
+            Tasha, when formulating Nyika.app's plan, balance Ansoff options using the SFA matrix (Suitability, Feasibility, Acceptability). Justify 32% B2B parcel margins vs 14% passenger rides!
+          </span>
+        </div>
+        <span className="text-[10px] font-mono text-purple-400 font-semibold">Tasha Aka • Strategy & Planning</span>
+      </div>
 
       {/* =========================================================================
           MODE 1: WRITTEN CASE STUDY & PLAN SUBMISSION ARENA (NYIKA.APP)

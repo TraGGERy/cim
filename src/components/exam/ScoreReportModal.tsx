@@ -1,9 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Award, CheckCircle, XCircle, RotateCcw, Home, BookOpen, BarChart3 } from 'lucide-react';
+import { Award, CheckCircle, XCircle, RotateCcw, Home, BookOpen, BarChart3, Sparkles } from 'lucide-react';
 import { UserExamAttempt, ExamQuestion } from '../../types/cim';
 import Link from 'next/link';
+import TashaAvatar from '../avatars/TashaAvatar';
+import ShumbaAvatar from '../avatars/ShumbaAvatar';
 
 interface ScoreReportModalProps {
   attempt: UserExamAttempt;
@@ -28,8 +30,69 @@ export default function ScoreReportModal({ attempt, questions, onRetake }: Score
     }
   };
 
+  const getShumbaFeedback = (grade: string) => {
+    switch (grade) {
+      case 'Distinction':
+        return {
+          title: 'Distinction Achieved! Outstanding Execution, Tasha.',
+          badge: 'Distinction Standard (80%+)',
+          comment:
+            'Tasha, this is an extraordinary performance! You demonstrated complete command across financial metrics and the strategic trade-offs of the Nyika.app case study. Maintain this momentum into the official examination window.',
+        };
+      case 'Merit':
+        return {
+          title: 'Merit Grade Confirmed. Strong Acuity, Tasha.',
+          badge: 'Merit Standard (70-79%)',
+          comment:
+            'Very commendable work, Tasha. You have a solid grasp of core syllabus competencies. To elevate this to a Distinction (80%+), review the multi-step variance and resource reallocation distractor rationales below.',
+        };
+      case 'Pass':
+        return {
+          title: 'Pass Standard Attained. Good Foundation, Tasha.',
+          badge: 'Pass Standard (60-69%)',
+          comment:
+            'Congratulations on securing a passing mark, Tasha. You have met the CIM 60% standard. Review your lowest Learning Outcome below and run a 10-Question Quick Exam drill to shore up weaker areas.',
+        };
+      default:
+        return {
+          title: 'Diagnostic Stepping Stone, Tasha.',
+          badge: 'Review & Retake Recommended',
+          comment:
+            'Do not be discouraged, Tasha—diagnostic mocks are designed to reveal gaps before the real exam. Examine the distractor rationale for each question below, check the Formula Sheet, and retake the test!',
+        };
+    }
+  };
+
+  const shumbaReview = getShumbaFeedback(score.grade);
+
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl mx-auto shadow-2xl space-y-8">
+      {/* Candidate & Mentor Banner */}
+      <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <TashaAvatar size="lg" showBadge showOnline />
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-extrabold text-white">Tasha Aka</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">
+                CIM Level 6 Candidate
+              </span>
+            </div>
+            <p className="text-xs text-slate-400">
+              CIM Diploma in Professional & Sustainable Marketing (Ofqual Regulated)
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 border-t sm:border-t-0 sm:border-l border-slate-800 pt-3 sm:pt-0 sm:pl-4">
+          <ShumbaAvatar size="md" showBadge showMentorShield />
+          <div className="text-left">
+            <div className="text-xs font-bold text-amber-300">Tutor Shumba, FCIM</div>
+            <div className="text-[10px] text-slate-400">Chief Examiner & Mentor</div>
+          </div>
+        </div>
+      </div>
+
       {/* Header Banner */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-blue-600/20 text-blue-400 border border-blue-500/30 mb-2">
@@ -49,6 +112,23 @@ export default function ScoreReportModal({ attempt, questions, onRetake }: Score
             {score.grade} ({score.percentage.toFixed(1)}%)
           </span>
         </div>
+      </div>
+
+      {/* Tutor Shumba Personalized Examiner Verdict */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-950/30 via-slate-950 to-slate-950 border border-amber-500/30 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ShumbaAvatar size="xs" showMentorShield />
+            <span className="text-xs font-bold text-amber-300">Tutor Shumba's Examiner Verdict for Tasha</span>
+          </div>
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
+            {shumbaReview.badge}
+          </span>
+        </div>
+        <h4 className="text-sm font-bold text-white">{shumbaReview.title}</h4>
+        <p className="text-xs text-slate-300 leading-relaxed italic">
+          "{shumbaReview.comment}"
+        </p>
       </div>
 
       {/* Metrics Summary Grid */}

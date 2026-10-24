@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="tashaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="tashaSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a06041"/>
+      <stop offset="100%" stop-color="#733c24"/>
+    </linearGradient>
+    <linearGradient id="tashaHair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1815"/>
+      <stop offset="100%" stop-color="#0a0807"/>
+    </linearGradient>
+    <linearGradient id="tashaBlazer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <linearGradient id="goldEarring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+    <filter id="avatarGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Base -->
+  <circle cx="100" cy="100" r="96" fill="url(#tashaBg)"/>
+  
+  <!-- Subtle Inner Ring Highlight -->
+  <circle cx="100" cy="100" r="93" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.3"/>
+
+  <!-- Bust / Torso -->
+  <g filter="url(#avatarGlow)">
+    <!-- Top inner shirt -->
+    <path d="M78 140 L122 140 L128 200 L72 200 Z" fill="#ffffff"/>
+    
+    <!-- Coral Red / Rose Smart Blazer -->
+    <path d="M42 200 C42 165 65 142 82 140 L100 178 L118 140 C135 142 158 165 158 200 Z" fill="url(#tashaBlazer)"/>
+    
+    <!-- Blazer Lapels -->
+    <path d="M82 140 L100 178 L78 200 L60 200 Z" fill="#9f1239" opacity="0.6"/>
+    <path d="M118 140 L100 178 L122 200 L140 200 Z" fill="#9f1239" opacity="0.6"/>
+    
+    <!-- Neck -->
+    <path d="M88 115 L112 115 L112 144 C112 148 88 148 88 144 Z" fill="#84452a"/>
+    <path d="M88 115 L112 115 L110 132 C104 135 96 135 90 132 Z" fill="#733c24" opacity="0.4"/>
+
+    <!-- Gold Chain / Pendant -->
+    <path d="M92 138 Q100 148 108 138" fill="none" stroke="url(#goldEarring)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="100" cy="148" r="2.5" fill="url(#goldEarring)"/>
+
+    <!-- Head / Face -->
+    <ellipse cx="100" cy="98" rx="30" ry="34" fill="url(#tashaSkin)"/>
+
+    <!-- Hair: Updo Crown & Braided Bun -->
+    <ellipse cx="100" cy="60" rx="28" ry="24" fill="url(#tashaHair)"/>
+    <path d="M68 85 C68 62 80 50 100 50 C120 50 132 62 132 85 C132 75 125 65 100 65 C75 65 68 75 68 85 Z" fill="url(#tashaHair)"/>
+    <!-- Braided texture accents -->
+    <path d="M80 55 Q100 48 120 55" fill="none" stroke="#33241b" stroke-width="2.5"/>
+    <path d="M84 65 Q100 58 116 65" fill="none" stroke="#33241b" stroke-width="2.5"/>
+
+    <!-- Side Hair Framing -->
+    <path d="M70 85 C69 105 72 115 75 120 C73 110 72 95 72 85 Z" fill="#1e1815"/>
+    <path d="M130 85 C131 105 128 115 125 120 C127 110 128 95 128 85 Z" fill="#1e1815"/>
+
+    <!-- Gold Hoop Earrings -->
+    <circle cx="68" cy="104" r="7" fill="none" stroke="url(#goldEarring)" stroke-width="2.5"/>
+    <circle cx="132" cy="104" r="7" fill="none" stroke="url(#goldEarring)" stroke-width="2.5"/>
+
+    <!-- Eyebrows -->
+    <path d="M78 86 Q86 82 94 85" fill="none" stroke="#1c120c" stroke-width="3" stroke-linecap="round"/>
+    <path d="M106 85 Q114 82 122 86" fill="none" stroke="#1c120c" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Eyes (Warm & Expressive) -->
+    <ellipse cx="86" cy="94" rx="4.5" ry="3.5" fill="#ffffff"/>
+    <circle cx="86" cy="94" r="2.8" fill="#26160d"/>
+    <circle cx="87.5" cy="92.5" r="1" fill="#ffffff"/>
+
+    <ellipse cx="114" cy="94" rx="4.5" ry="3.5" fill="#ffffff"/>
+    <circle cx="114" cy="94" r="2.8" fill="#26160d"/>
+    <circle cx="115.5" cy="92.5" r="1" fill="#ffffff"/>
+
+    <!-- Eyelash accents -->
+    <path d="M82 92 Q86 89 90 92" fill="none" stroke="#1a0f08" stroke-width="1.5"/>
+    <path d="M110 92 Q114 89 118 92" fill="none" stroke="#1a0f08" stroke-width="1.5"/>
+
+    <!-- Nose -->
+    <path d="M100 94 L98 107 C97 109 103 109 102 107 Z" fill="#66341f"/>
+    <ellipse cx="100" cy="108" rx="4" ry="1.8" fill="#582a17"/>
+
+    <!-- Cheeks (Warm healthy glow) -->
+    <circle cx="80" cy="106" r="6" fill="#be123c" opacity="0.2" filter="blur(2px)"/>
+    <circle cx="120" cy="106" r="6" fill="#be123c" opacity="0.2" filter="blur(2px)"/>
+
+    <!-- Confident Warm Smile -->
+    <path d="M88 116 Q100 128 112 116" fill="#9f1239"/>
+    <path d="M91 117 Q100 124 109 117" fill="#ffffff"/>
+    <path d="M86 115 C88 116 112 116 114 115" fill="none" stroke="#5c1d24" stroke-width="1"/>
+  </g>
+
+  <!-- CIM Scholar Badge in corner -->
+  <g transform="translate(142, 142)">
+    <circle cx="18" cy="18" r="18" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2"/>
+    <polygon points="18,6 22,14 31,15 24,21 26,30 18,25 10,30 12,21 5,15 14,14" fill="#38bdf8"/>
+  </g>
+</svg>

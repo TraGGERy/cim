@@ -34,6 +34,8 @@ import QuestionNavigator from '../../components/exam/QuestionNavigator';
 import FormulaCalculator from '../../components/exam/FormulaCalculator';
 import ScoreReportModal from '../../components/exam/ScoreReportModal';
 import { saveExamAttempt } from '../../lib/storage';
+import TashaAvatar from '../../components/avatars/TashaAvatar';
+import ShumbaAvatar from '../../components/avatars/ShumbaAvatar';
 
 function QuickExamContent() {
   const searchParams = useSearchParams();
@@ -224,27 +226,42 @@ function QuickExamContent() {
             </div>
           </div>
 
-          <Link
-            href="/"
-            className="text-xs text-slate-400 hover:text-white flex items-center gap-1 font-semibold"
-          >
-            <span>Exit to Hub</span>
-          </Link>
+          <div className="flex items-center gap-3">
+            {/* Candidate Profile Chip */}
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
+              <TashaAvatar size="xs" showOnline={false} />
+              <span className="hidden sm:inline text-xs font-bold text-white">Tasha Aka</span>
+            </div>
+
+            <Link
+              href="/"
+              className="text-xs text-slate-400 hover:text-white flex items-center gap-1 font-semibold"
+            >
+              <span>Exit to Hub</span>
+            </Link>
+          </div>
         </header>
 
         {/* Setup Container */}
         <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
-          {/* Hero Banner */}
-          <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950/40 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold border border-blue-500/20">
-              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              Tailored CIM Level 6 Practice • Instant Examiner Rationale
+          {/* Hero Banner with Tutor Shumba & Tasha Aka */}
+          <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950/40 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 text-xs font-semibold border border-emerald-500/20">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                Tailored for Tasha Aka • Coached by Tutor Shumba (FCIM)
+              </div>
+              <div className="hidden sm:flex items-center gap-2 text-xs text-amber-300">
+                <ShumbaAvatar size="xs" showMentorShield={false} />
+                <span className="font-semibold">Tutor Shumba Recommends: 10 Qs Daily</span>
+              </div>
             </div>
+
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               Short Quick Exam Generator
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Configure a focused mini-exam to fit your study schedule. Select your preferred question volume, scope across Commercial Intelligence or Strategy & Planning, and choose timed or untimed practice.
+              Hi <strong>Tasha</strong>! Choose your question count and target syllabus area below. Each question includes official 2-minute CIM pacing, formula step breakdowns, and instant Tutor Shumba examiner rationale.
             </p>
           </div>
 
@@ -615,8 +632,28 @@ function QuickExamContent() {
               New Quiz
             </button>
           )}
+
+          {/* Candidate Profile Chip */}
+          <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-800">
+            <TashaAvatar size="xs" showOnline={false} />
+            <span className="text-xs font-bold text-white">Tasha Aka</span>
+          </div>
         </div>
       </header>
+
+      {/* Tutor Shumba Quick Exam Advice Banner */}
+      {!isExamCompleted && (
+        <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 border-b border-amber-500/20 px-4 sm:px-6 py-2 flex items-center justify-between text-xs text-slate-300">
+          <div className="flex items-center gap-2">
+            <ShumbaAvatar size="xs" showBadge={false} showMentorShield={false} />
+            <span className="text-amber-300 font-bold">Tutor Shumba:</span>
+            <span className="hidden md:inline text-slate-300">
+              Stay composed, Tasha! Eliminate extreme options first, check your formula units, and trust your preparation.
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-emerald-400 font-semibold">Candidate: Tasha Aka • Quick Drill</span>
+        </div>
+      )}
 
       {/* Main Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">

@@ -6,6 +6,7 @@ import { Home, Share2, Compass, Cpu } from 'lucide-react';
 import AttributionCanvas from '../../components/3d/AttributionCanvas';
 import Matrix3DCanvas from '../../components/3d/Matrix3DCanvas';
 import Resource5MCanvas from '../../components/3d/Resource5MCanvas';
+import TashaAvatar from '../../components/avatars/TashaAvatar';
 
 export default function Visual3DLabPage() {
   const [activeTab, setActiveTab] = useState<'attribution' | 'matrix' | 'resources'>('attribution');
@@ -71,6 +72,11 @@ export default function Visual3DLabPage() {
             <Cpu className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">5Ms Resource Sim</span>
           </button>
+        </div>
+
+        <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-800">
+          <TashaAvatar size="xs" showOnline={false} />
+          <span className="text-xs font-bold text-white">Tasha Aka</span>
         </div>
       </header>
 
