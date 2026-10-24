@@ -8,7 +8,8 @@ import {
   Calculator,
   Flag,
   Award,
-  Home
+  Home,
+  Zap
 } from 'lucide-react';
 import { getCommercialIntelligenceExamQuestions } from '../../../lib/examData/commercialIntelligence';
 import { ExamQuestion, UserExamAttempt } from '../../../types/cim';
@@ -153,7 +154,16 @@ export default function CommercialIntelligenceExamPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/quick-exam?scope=commercial-intelligence"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-500/30 transition-all"
+            title="Switch to Short Quick Exam (Pick 5, 10, 15, 20 Qs)"
+          >
+            <Zap className="w-3.5 h-3.5 fill-amber-400" />
+            <span>Quick Quiz (5-20 Qs)</span>
+          </Link>
+
           <button
             onClick={() => setShowCalculator(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
@@ -311,6 +321,7 @@ export default function CommercialIntelligenceExamPage() {
                 flaggedQuestions={flaggedQuestions}
                 onSelectQuestion={(idx) => setCurrentIndex(idx)}
                 onToggleFlag={handleToggleFlag}
+                questionIds={questions.map((q) => q.id)}
               />
             </div>
           </div>

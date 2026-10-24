@@ -1,4 +1,4 @@
-export type ModuleId = 'commercial-intelligence' | 'strategy-planning';
+export type ModuleId = 'commercial-intelligence' | 'strategy-planning' | 'quick-exam';
 
 export interface ModuleInfo {
   id: ModuleId;

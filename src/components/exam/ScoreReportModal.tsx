@@ -89,7 +89,15 @@ export default function ScoreReportModal({ attempt, questions, onRetake }: Score
                 ? 'LO1: Metrics & Financial Performance'
                 : loKey === 'LO2'
                 ? 'LO2: Resource Management & 5Ms'
-                : 'LO3: Forecasting & Budgeting Methods';
+                : loKey === 'LO3'
+                ? 'LO3: Forecasting & Budgeting Methods'
+                : loKey === 'LO4'
+                ? 'LO4: Brand Equity, Positioning & Objectives'
+                : loKey === 'LO5'
+                ? 'LO5: Tactical Mix (7Ps) & Implementation'
+                : loKey === 'LO6'
+                ? 'LO6: Control, Dashboards & Governance'
+                : `${loKey}: Syllabus Learning Area`;
 
             const isPassed = data.percentage >= 60;
 

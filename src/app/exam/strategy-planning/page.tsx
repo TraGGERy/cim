@@ -13,7 +13,8 @@ import {
   BookOpen,
   ArrowRight,
   HelpCircle,
-  Check
+  Check,
+  Zap
 } from 'lucide-react';
 import { STRATEGY_PLANNING_CASES, STRATEGY_PLANNING_MCQ_QUESTIONS } from '../../../lib/examData/strategyPlanning';
 import { gradeStrategyResponseDeepSeek, DEEPSEEK_MODELS, DEFAULT_DEEPSEEK_MODEL } from '../../../lib/deepseek';
@@ -348,6 +349,15 @@ Positioning: Southern Africa's fastest, transparently priced B2B motorcycle logi
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/quick-exam?scope=strategy-planning"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-500/30 transition-all"
+            title="Switch to Short Quick Exam (Pick 5, 10, 15, 20 Qs)"
+          >
+            <Zap className="w-3.5 h-3.5 fill-amber-400" />
+            <span>Quick Quiz (5-20 Qs)</span>
+          </Link>
+
           <button
             onClick={() => setShowKeyModal(true)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
@@ -665,13 +675,23 @@ Positioning: Southern Africa's fastest, transparently priced B2B motorcycle logi
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-xs font-mono">
-              <div className="text-slate-400">
-                Answered: <strong className="text-white">{answeredMcqCount}</strong> / {totalMcqs}
-              </div>
-              <div className="text-slate-400">
-                Score: <strong className="text-emerald-400">{correctMcqCount}</strong> Correct (
-                {answeredMcqCount > 0 ? Math.round((correctMcqCount / answeredMcqCount) * 100) : 0}%)
+            <div className="flex items-center gap-3 flex-wrap">
+              <Link
+                href="/quick-exam?scope=strategy-planning"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-300 border border-purple-800 text-xs font-semibold transition-all"
+                title="Launch a custom quick quiz with chosen question count"
+              >
+                <Zap className="w-3.5 h-3.5 fill-purple-400" />
+                <span>Custom Quick Quiz</span>
+              </Link>
+              <div className="flex items-center gap-4 text-xs font-mono">
+                <div className="text-slate-400">
+                  Answered: <strong className="text-white">{answeredMcqCount}</strong> / {totalMcqs}
+                </div>
+                <div className="text-slate-400">
+                  Score: <strong className="text-emerald-400">{correctMcqCount}</strong> Correct (
+                  {answeredMcqCount > 0 ? Math.round((correctMcqCount / answeredMcqCount) * 100) : 0}%)
+                </div>
               </div>
             </div>
           </div>

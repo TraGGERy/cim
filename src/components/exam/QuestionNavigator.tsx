@@ -10,6 +10,7 @@ interface QuestionNavigatorProps {
   flaggedQuestions: number[];
   onSelectQuestion: (index: number) => void;
   onToggleFlag: (questionId: number) => void;
+  questionIds?: number[];
 }
 
 export default function QuestionNavigator({
@@ -18,9 +19,10 @@ export default function QuestionNavigator({
   answers,
   flaggedQuestions,
   onSelectQuestion,
-  onToggleFlag
+  onToggleFlag,
+  questionIds
 }: QuestionNavigatorProps) {
-  const currentQuestionId = currentIndex + 1;
+  const currentQuestionId = questionIds && questionIds[currentIndex] !== undefined ? questionIds[currentIndex] : currentIndex + 1;
   const isCurrentFlagged = flaggedQuestions.includes(currentQuestionId);
   const answeredCount = Object.keys(answers).length;
 
@@ -49,14 +51,14 @@ export default function QuestionNavigator({
       {/* Grid of Question Numbers */}
       <div className="grid grid-cols-5 sm:grid-cols-9 md:grid-cols-5 gap-1.5 overflow-y-auto max-h-60 sm:max-h-72 p-1">
         {Array.from({ length: totalQuestions }, (_, i) => {
-          const qId = i + 1;
+          const qId = questionIds && questionIds[i] !== undefined ? questionIds[i] : i + 1;
           const isAnswered = !!answers[qId];
           const isFlagged = flaggedQuestions.includes(qId);
           const isCurrent = i === currentIndex;
 
           return (
             <button
-              key={qId}
+              key={`${qId}-${i}`}
               onClick={() => onSelectQuestion(i)}
               className={`relative h-9 rounded-lg font-mono text-xs font-bold transition-all flex items-center justify-center border ${
                 isCurrent
@@ -66,7 +68,7 @@ export default function QuestionNavigator({
                   : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
               }`}
             >
-              <span>{qId}</span>
+              <span>{i + 1}</span>
               {isFlagged && (
                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 border-2 border-slate-900 shadow" />
               )}
